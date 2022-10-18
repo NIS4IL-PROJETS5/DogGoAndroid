@@ -7,30 +7,30 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.doggo_android.HomeFragment"
+        android:name="com.example.doggo_android.views.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
     android:id="@+id/membersFragment"
-    android:name="com.example.doggo_android.MembersFragment"
+    android:name="com.example.doggo_android.views.MembersFragment"
     android:label="fragment_members"
     tools:layout="@layout/fragment_members" />
 
     <fragment
         android:id="@+id/contactFragment"
-        android:name="com.example.doggo_android.ContactFragment"
+        android:name="com.example.doggo_android.views.ContactFragment"
         android:label="fragment_contact"
         tools:layout="@layout/fragment_contact" />
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.doggo_android.ProfileFragment"
+        android:name="com.example.doggo_android.views.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.doggo_android.SettingsFragment"
+        android:name="com.example.doggo_android.views.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
 
