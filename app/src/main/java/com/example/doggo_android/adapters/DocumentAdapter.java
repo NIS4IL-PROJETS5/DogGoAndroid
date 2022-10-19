@@ -63,12 +63,16 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.Docume
         holder.name.setText(documents.get(position).getName());
         if (documents.get(position).getStatus() == DOC_STATUS.NOT_SENT) {
             holder.statusDescription.setText("Pas encore envoyé");
+            holder.statusLogo.setImageResource(R.drawable.ic_baseline_more_horiz_24);
         } else if (documents.get(position).getStatus() == DOC_STATUS.PENDING) {
             holder.statusDescription.setText("En attente");
+            holder.statusLogo.setImageResource(R.drawable.ic_baseline_more_horiz_24);
         } else if (documents.get(position).getStatus() == DOC_STATUS.ACCEPTED) {
             holder.statusDescription.setText("Accepté");
+            holder.statusLogo.setImageResource(R.drawable.ic_baseline_check_24);
         } else if (documents.get(position).getStatus() == DOC_STATUS.REJECTED) {
             holder.statusDescription.setText("Refusé");
+            holder.statusLogo.setImageResource(R.drawable.ic_baseline_close_24);
         }
 
         holder.layout.setOnClickListener(v -> {
