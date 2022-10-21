@@ -1,17 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_200"
+    android:background="#74FF9800"
+    android:orientation="vertical"
     tools:context=".views.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile fragment"
-        android:textSize="26sp"
-        android:layout_gravity="center"/>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="164dp"
+        android:layout_marginTop="60dp"
+        android:layout_weight="0"
+        tools:src="@tools:sample/avatars"
+        android:src="@drawable/ic_baseline_person_24"
 
-</FrameLayout>
+      />
+
+    <TextView
+        android:id="@+id/textView_nom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0"
+        android:text="Nom"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/textView_prenom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0"
+        android:text="Prenom"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/button_profile_modify"
+        android:layout_width="298dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0"
+        android:backgroundTint="#14FF9800"
+        android:text="MODIFIER LE PROFIL" />
+
+    <Button
+        android:id="@+id/button_profile_modify2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="58dp"
+        android:layout_weight="0"
+        android:backgroundTint="#72FF9800"
+        android:text="DEMANDE D'INSCRIPTION" />
+
+</LinearLayout>
