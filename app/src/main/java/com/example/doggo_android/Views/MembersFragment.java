@@ -1,4 +1,4 @@
-package com.example.doggo_android.views;
+package com.example.doggo_android.Views;
 
 import android.os.Bundle;
 
@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import com.example.doggo_android.R;
 
 
-public class ProfileFragment extends Fragment {
+public class MembersFragment extends Fragment {
 
-    public ProfileFragment() {
+
+    public MembersFragment() {
+
     }
 
     @Override
@@ -25,6 +27,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+
+        return inflater.inflate(R.layout.fragment_members, container, false);
     }
 }

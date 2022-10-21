@@ -1,4 +1,4 @@
-package com.example.doggo_android.views;
+package com.example.doggo_android.Views;
 
 import android.os.Bundle;
 
