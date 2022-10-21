@@ -22,5 +22,6 @@ public class MainActivity extends AppCompatActivity {
         assert navHostFragment != null;
         NavController controller = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(binding.bottomNavigationView,controller);
+
     }
 }
