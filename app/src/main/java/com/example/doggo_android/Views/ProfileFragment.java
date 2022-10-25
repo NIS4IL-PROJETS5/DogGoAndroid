@@ -1,5 +1,6 @@
 package com.example.doggo_android.Views;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class ProfileFragment extends Fragment {
 
     FragmentProfileBinding binding;
     RetrofitRequests requests;
+    private static final String TAG = "ProfileFragment";
 
     public ProfileFragment() {
     }
@@ -43,7 +45,7 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -54,10 +56,14 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         String apiUrl = Utils.getConfigValue(requireContext(), "api_url");
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(apiUrl).addConverterFactory(GsonConverterFactory.create()).build();
 
-        requests = retrofit.create(RetrofitRequests.class);
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(apiUrl).addConverterFactory(GsonConverterFactory.create()).build();
+            requests = retrofit.create(RetrofitRequests.class);
+        } catch (Exception e) {
+            Log.e(TAG, "onViewCreated: " + e.getMessage());
+        }
 
         binding.profileLoginButton.setOnClickListener(v -> handleLoginDialog());
         binding.profileSignupButton.setOnClickListener(v -> handleSignupDialog());
@@ -83,10 +89,16 @@ public class ProfileFragment extends Fragment {
 
             call.enqueue(new Callback<IUser>() {
                 @Override
-                public void onResponse(Call<IUser> call, Response<IUser> response) {
+                public void onResponse(@NonNull Call<IUser> call, @NonNull Response<IUser> response) {
                     switch (response.code()) {
                         case 200:
                             IUser result = response.body();
+                           //store the token in SharedPreferences
+                            SharedPreferences pref = requireContext().getSharedPreferences("DogGo", 0); // 0 - for private mode
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString("token", result.getToken()); // Storing string
+                            editor.commit(); // commit changes
+                            
                             Utils.alertDialogHandler(getContext(), "Login Success", "UserId: " + result.getId() + "\n" + "Role: " + result.getRole() + "\n" + "Token: " + result.getToken());
                             break;
 
@@ -130,7 +142,7 @@ public class ProfileFragment extends Fragment {
 
             call.enqueue(new Callback<Void>() {
                 @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
+                public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                     switch (response.code()) {
                         case 201:
                             Utils.alertDialogHandler(getContext(), "Success", "User created successfully");
@@ -147,7 +159,7 @@ public class ProfileFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<Void> call, Throwable t) {
+                public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                     Utils.alertDialogHandler(getContext(), "Error", t.getMessage());
                 }
             });
