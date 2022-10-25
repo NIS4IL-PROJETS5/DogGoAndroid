@@ -14,10 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.doggo_android.MainActivity;
-import com.example.doggo_android.Models.IRetrofit;
-import com.example.doggo_android.Models.LoginResult;
+import com.example.doggo_android.Models.RetrofitRequests;
+import com.example.doggo_android.Models.IUser;
 import com.example.doggo_android.R;
+import com.example.doggo_android.Utils;
 import com.example.doggo_android.databinding.FragmentProfileBinding;
 
 import java.util.HashMap;
@@ -32,9 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProfileFragment extends Fragment {
 
     FragmentProfileBinding binding;
-    private Retrofit retrofit;
-    private IRetrofit retrofitInterface;
-    private String BASE_URL = "http://10.0.2.2:3000/";
+    RetrofitRequests requests;
 
     public ProfileFragment() {
     }
@@ -55,25 +53,20 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        String apiUrl = Utils.getConfigValue(requireContext(), "api_url");
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(apiUrl).addConverterFactory(GsonConverterFactory.create()).build();
 
-        Log.d("RETRO", "onViewCreated: " + retrofit);
-
-        retrofitInterface = retrofit.create(IRetrofit.class);
-
-        Log.d("RETRO", "onViewCreated" + retrofitInterface);
+        requests = retrofit.create(RetrofitRequests.class);
 
         binding.profileLoginButton.setOnClickListener(v -> handleLoginDialog());
-
+        binding.profileSignupButton.setOnClickListener(v -> handleSignupDialog());
     }
 
-
     private void handleLoginDialog() {
-        Log.d("RETRO", "handleLoginDialog: " + "Login Dialog");
         View view = getLayoutInflater().inflate(R.layout.dialog_login, null);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
 
         builder.setView(view).show();
 
@@ -81,53 +74,84 @@ public class ProfileFragment extends Fragment {
         EditText emailEdit = view.findViewById(R.id.dialog_login_email_input);
         EditText passwordEdit = view.findViewById(R.id.dialog_login_password_input);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        loginBtn.setOnClickListener(v -> {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("email", emailEdit.getText().toString());
+            map.put("password", passwordEdit.getText().toString());
 
-                HashMap<String, String> map = new HashMap<>();
+            Call<IUser> call = requests.executeLogin(map);
 
-                map.put("email", emailEdit.getText().toString());
-                map.put("password", passwordEdit.getText().toString());
+            call.enqueue(new Callback<IUser>() {
+                @Override
+                public void onResponse(Call<IUser> call, Response<IUser> response) {
+                    switch (response.code()) {
+                        case 200:
+                            IUser result = response.body();
+                            Utils.alertDialogHandler(getContext(), "Login Success", "UserId: " + result.getId() + "\n" + "Role: " + result.getRole() + "\n" + "Token: " + result.getToken());
+                            break;
 
-                Call<LoginResult> call = retrofitInterface.executeLogin(map);
+                        case 401:
+                            Utils.alertDialogHandler(getContext(), "Login Failed", "Wrong email or password");
+                            break;
 
-                call.enqueue(new Callback<LoginResult>() {
-                    @Override
-                    public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
-                        Log.d("BODY", "onResponse: " + response);
-                        if (response.code() == 200) {
-                            Log.d("RETRO", "200");
-                            LoginResult result = response.body();
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-                            builder.setTitle("Success").setMessage("UserId: " + result.getId() + "\n" + "Role: " + result.getRole() + "\n" + "Token: " + result.getToken()).setPositiveButton("OK", null).show();
-                        } else if (response.code() == 400) {
-                            Log.d("RETRO", "400");
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-                            builder.setTitle("Error").setMessage("Invalid email or password").setPositiveButton("OK", null).show();
-                        } else if (response.code() == 401) {
-                            Log.d("RETRO", "401");
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-                            builder.setTitle("Error").setMessage("User not found").setPositiveButton("OK", null).show();
-                        }
+                        case 500:
+                            Utils.alertDialogHandler(getContext(), "Login Failed", "Server Error");
+                            break;
                     }
+                }
 
-                    @Override
-                    public void onFailure(Call<LoginResult> call, Throwable t) {
-                        Log.d("RETRO", "onFailure: " + t.getMessage());
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-                        builder.setTitle("Error").setMessage(t.getMessage()).setPositiveButton("OK", null).show();
-                    }
-                });
-            }
+                @Override
+                public void onFailure(Call<IUser> call, Throwable t) {
+                    Utils.alertDialogHandler(getContext(), "Error", t.getMessage());
+                }
+            });
         });
-
     }
 
+    private void handleSignupDialog() {
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_signup, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setView(view).show();
+
+        Button registerBtn = view.findViewById(R.id.dialog_signup_button);
+        EditText emailEdit = view.findViewById(R.id.dialog_signup_email_input);
+        EditText passwordEdit = view.findViewById(R.id.dialog_signup_password_input);
+        EditText nameEdit = view.findViewById(R.id.dialog_signup_name_input);
+
+        registerBtn.setOnClickListener(v -> {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("email", emailEdit.getText().toString());
+            map.put("password", passwordEdit.getText().toString());
+            map.put("name", nameEdit.getText().toString());
+
+            Call<Void> call = requests.executeRegister(map);
+
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    switch (response.code()) {
+                        case 201:
+                            Utils.alertDialogHandler(getContext(), "Success", "User created successfully");
+                            break;
+
+                        case 400:
+                            Utils.alertDialogHandler(getContext(), "Error", "Invalid email or password");
+                            break;
+
+                        case 500:
+                            Utils.alertDialogHandler(getContext(), "Error", "Internal server error");
+                            break;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    Utils.alertDialogHandler(getContext(), "Error", t.getMessage());
+                }
+            });
+        });
+    }
 }
 

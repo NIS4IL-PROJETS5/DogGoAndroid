@@ -6,9 +6,9 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
-public interface IRetrofit {
+public interface RetrofitRequests {
     @POST("/api/auth/login")
-    Call<LoginResult> executeLogin(@Body HashMap<String, String> map);
+    Call<IUser> executeLogin(@Body HashMap<String, String> map);
 
     @POST("api/auth/signup")
     Call<Void> executeRegister(@Body HashMap<String, String> map);

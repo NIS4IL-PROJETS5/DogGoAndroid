@@ -5,6 +5,14 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/dialog_signup_name_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Enter name"
+        />
+
+    <EditText
         android:id="@+id/dialog_signup_email_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

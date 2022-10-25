@@ -2,7 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- permission INTERNET is required for network access -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--  usesCleartextTraffic="true" is required for HTTP requests (android 10 +) -->
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
