@@ -1,13 +1,19 @@
 package com.example.doggo_android.models;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.example.doggo_android.enums.DOC_STATUS;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class Document {
     private String name,description,rejectionReason;
     private DOC_STATUS status;
-    private Bitmap document,example;
+    private File documentMember;
 
     public Document(String name, String description) {
         this.name = name;
@@ -53,4 +59,13 @@ public class Document {
     public void setRejectionReason(String rejectionReason) {
         this.rejectionReason = rejectionReason;
     }
+
+    public File getDocumentMember() {
+        return documentMember;
+    }
+
+    public void setDocumentMember(File documentMember) {
+        this.documentMember = documentMember;
+    }
+
 }

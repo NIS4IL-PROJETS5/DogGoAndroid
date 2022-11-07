@@ -41,6 +41,15 @@
         android:id="@+id/documentMemberFragment"
         android:name="com.example.doggo_android.views.DocumentMemberFragment"
         android:label="fragment_document_member"
-        tools:layout="@layout/fragment_document_member" />
+        tools:layout="@layout/fragment_document_member" >
+        <action
+            android:id="@+id/action_documentMemberFragment_to_documentMemberFocusFragment"
+            app:destination="@id/documentMemberFocusFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/documentMemberFocusFragment"
+        android:name="com.example.doggo_android.views.DocumentMemberFocusFragment"
+        android:label="fragment_document_member_focus"
+        tools:layout="@layout/fragment_document_member_focus" />
 
 </navigation>

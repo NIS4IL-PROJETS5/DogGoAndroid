@@ -1,10 +1,14 @@
 package com.example.doggo_android.viewmodels;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+
 import androidx.lifecycle.ViewModel;
 
 import com.example.doggo_android.enums.DOC_STATUS;
 import com.example.doggo_android.models.Document;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +42,4 @@ public class DocumentViewModel extends ViewModel {
         documents.add(new Document("Document 3","Description 3",DOC_STATUS.ACCEPTED));
         documents.add(new Document("Document 4","Description 4",DOC_STATUS.REJECTED));
     }
-
-
 }

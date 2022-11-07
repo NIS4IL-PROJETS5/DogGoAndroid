@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doggo_android.MainActivity;
@@ -77,6 +78,7 @@ public class DocumentMemberAdapter extends RecyclerView.Adapter<DocumentMemberAd
 
         holder.layout.setOnClickListener(v -> {
             viewModelDocument.setSelectedDocument(documents.get(position));
+            Navigation.findNavController(holder.itemView).navigate(R.id.action_documentMemberFragment_to_documentMemberFocusFragment);
         });
     }
 
