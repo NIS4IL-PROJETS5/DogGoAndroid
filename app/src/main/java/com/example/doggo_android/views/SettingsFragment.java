@@ -4,14 +4,20 @@ import com.example.doggo_android.databinding.FragmentSettingsBinding;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +33,7 @@ public class SettingsFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +45,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
          // This is creating a notification builder.
          this.builder = new NotificationCompat.Builder(requireContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)
@@ -49,12 +54,31 @@ public class SettingsFragment extends Fragment {
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText("This is more details about this notification"))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
         binding.show.setOnClickListener(v ->
         {
             createNotificationChannel();
             getContext();
             NotificationManager notificationManager = (NotificationManager) requireActivity().getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(1, builder.build());
+        });
+
+        binding.turnOnOffNotification.setOnClickListener(v ->
+        {
+            Log.d("TESTBUTTON", "onViewCreated: TEST ");
+
+            //Request for notification permission
+            //Not working to check if permission is granted or not
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    ActivityCompat.requestPermissions(requireActivity(), new String[]{
+                                Manifest.permission.POST_NOTIFICATIONS
+                    }, 100);
+                    Log.d("TESTBUTTON", "onViewCreated: Version supported ");
+                } else {
+                    Log.d("TESTBUTTON", "onViewCreated: Version not supported");
+                }
+            }
         });
     }
 
@@ -78,9 +102,3 @@ public class SettingsFragment extends Fragment {
             }
         }
 }
-
-
-
-
-//        }
-//    }
