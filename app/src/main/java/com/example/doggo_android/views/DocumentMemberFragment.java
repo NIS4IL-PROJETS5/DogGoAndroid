@@ -12,8 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.doggo_android.R;
-import com.example.doggo_android.adapters.DocumentAdapter;
+import com.example.doggo_android.adapters.DocumentMemberAdapter;
 import com.example.doggo_android.databinding.FragmentDocumentMemberBinding;
 import com.example.doggo_android.viewmodels.DocumentViewModel;
 
@@ -21,7 +20,7 @@ import com.example.doggo_android.viewmodels.DocumentViewModel;
 public class DocumentMemberFragment extends Fragment {
 
 
-    DocumentAdapter documentAdapter;
+    DocumentMemberAdapter documentMemberAdapter;
     DocumentViewModel viewModelDocument;
 
     FragmentDocumentMemberBinding binding;
@@ -47,9 +46,9 @@ public class DocumentMemberFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModelDocument = new ViewModelProvider(requireActivity()).get(DocumentViewModel.class);
-        documentAdapter = new DocumentAdapter(viewModelDocument.getDocuments(), getContext());
+        documentMemberAdapter = new DocumentMemberAdapter(viewModelDocument.getDocuments(), getContext());
         binding.DocumentMemberRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.DocumentMemberRecyclerView.setAdapter(documentAdapter);
+        binding.DocumentMemberRecyclerView.setAdapter(documentMemberAdapter);
         binding.DocumentMemberRecyclerView.setHasFixedSize(true);
     }
 }
