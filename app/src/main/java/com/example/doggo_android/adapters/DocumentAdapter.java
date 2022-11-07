@@ -22,7 +22,7 @@ import com.example.doggo_android.viewmodels.DocumentViewModel;
 
 import java.util.List;
 
-public class DocumentMemberAdapter extends RecyclerView.Adapter<DocumentMemberAdapter.DocumentViewHolder> {
+public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.DocumentViewHolder> {
 
     List<Document> documents;
     Context context;
@@ -31,7 +31,7 @@ public class DocumentMemberAdapter extends RecyclerView.Adapter<DocumentMemberAd
 
     RvitemDocumentMemberBinding binding;
     
-    public DocumentMemberAdapter(List<Document> documents, Context context) {
+    public DocumentAdapter(List<Document> documents, Context context) {
         this.documents = documents;
         this.context = context;
         this.viewModelDocument = new ViewModelProvider((MainActivity)context).get(DocumentViewModel.class);
