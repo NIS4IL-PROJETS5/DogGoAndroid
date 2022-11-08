@@ -1,4 +1,4 @@
-package com.example.doggo_android.interfaces;
+package com.example.doggo_android.Interfaces;
 
 import com.example.doggo_android.models.Document;
 

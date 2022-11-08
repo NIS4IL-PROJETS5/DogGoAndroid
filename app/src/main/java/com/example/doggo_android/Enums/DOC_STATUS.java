@@ -1,4 +1,4 @@
-package com.example.doggo_android.enums;
+package com.example.doggo_android.Enums;
 
 public enum DOC_STATUS {
     NOT_SENT("Ajouter Document"),

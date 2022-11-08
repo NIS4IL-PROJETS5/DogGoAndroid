@@ -2,7 +2,7 @@ package com.example.doggo_android.viewmodels;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.doggo_android.enums.DOC_STATUS;
+import com.example.doggo_android.Enums.DOC_STATUS;
 import com.example.doggo_android.models.Document;
 
 import java.util.ArrayList;

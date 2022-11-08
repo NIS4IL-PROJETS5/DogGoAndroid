@@ -1,4 +1,4 @@
-package com.example.doggo_android.views;
+package com.example.doggo_android.Views;
 
 import android.os.Bundle;
 
@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.doggo_android.R;
-import com.example.doggo_android.adapters.DocumentMemberAdapter;
+import com.example.doggo_android.Adapters.DocumentMemberAdapter;
 import com.example.doggo_android.databinding.FragmentDocumentMemberBinding;
 import com.example.doggo_android.viewmodels.DocumentViewModel;
 

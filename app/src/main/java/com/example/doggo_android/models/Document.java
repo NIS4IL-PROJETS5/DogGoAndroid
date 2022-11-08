@@ -2,7 +2,7 @@ package com.example.doggo_android.models;
 
 import android.graphics.Bitmap;
 
-import com.example.doggo_android.enums.DOC_STATUS;
+import com.example.doggo_android.Enums.DOC_STATUS;
 
 public class Document {
     private String name,description,rejectionReason;

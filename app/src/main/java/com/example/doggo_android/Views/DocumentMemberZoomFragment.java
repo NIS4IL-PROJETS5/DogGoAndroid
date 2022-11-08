@@ -1,4 +1,4 @@
-package com.example.doggo_android.views;
+package com.example.doggo_android.Views;
 
 import android.Manifest;
 import android.app.Activity;
@@ -24,7 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.doggo_android.databinding.FragmentDocumentMemberZoomBinding;
-import com.example.doggo_android.enums.DOC_STATUS;
+import com.example.doggo_android.Enums.DOC_STATUS;
 import com.example.doggo_android.models.Document;
 import com.example.doggo_android.viewmodels.DocumentViewModel;
 

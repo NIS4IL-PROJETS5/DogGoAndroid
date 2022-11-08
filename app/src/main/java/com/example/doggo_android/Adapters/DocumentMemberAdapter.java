@@ -1,4 +1,4 @@
-package com.example.doggo_android.adapters;
+package com.example.doggo_android.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.doggo_android.MainActivity;
 import com.example.doggo_android.R;
 import com.example.doggo_android.databinding.RvitemDocumentMemberBinding;
-import com.example.doggo_android.enums.DOC_STATUS;
-import com.example.doggo_android.interfaces.documentZoomClickListener;
+import com.example.doggo_android.Enums.DOC_STATUS;
+import com.example.doggo_android.Interfaces.documentZoomClickListener;
 import com.example.doggo_android.models.Document;
 import com.example.doggo_android.viewmodels.DocumentViewModel;
 
