@@ -6,12 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.doggo_android.R;
 import com.example.doggo_android.adapters.DocumentMemberAdapter;
 import com.example.doggo_android.databinding.FragmentDocumentMemberBinding;
 import com.example.doggo_android.viewmodels.DocumentViewModel;
@@ -47,7 +49,10 @@ public class DocumentMemberFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModelDocument = new ViewModelProvider(requireActivity()).get(DocumentViewModel.class);
-        documentMemberAdapter = new DocumentMemberAdapter(viewModelDocument.getDocuments(), getContext());
+        documentMemberAdapter = new DocumentMemberAdapter(viewModelDocument.getDocuments(), getContext(), document -> {
+            viewModelDocument.setSelectedDocument(document);
+            Navigation.findNavController(view).navigate(R.id.action_documentMemberFragment_to_documentMemberZoomFragment);
+        });
         binding.DocumentMemberRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.DocumentMemberRecyclerView.setAdapter(documentMemberAdapter);
         binding.DocumentMemberRecyclerView.setHasFixedSize(true);

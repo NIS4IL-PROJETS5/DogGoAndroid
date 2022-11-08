@@ -16,6 +16,7 @@ import com.example.doggo_android.MainActivity;
 import com.example.doggo_android.R;
 import com.example.doggo_android.databinding.RvitemDocumentMemberBinding;
 import com.example.doggo_android.enums.DOC_STATUS;
+import com.example.doggo_android.interfaces.documentZoomClickListener;
 import com.example.doggo_android.models.Document;
 import com.example.doggo_android.viewmodels.DocumentViewModel;
 
@@ -29,11 +30,14 @@ public class DocumentMemberAdapter extends RecyclerView.Adapter<DocumentMemberAd
     DocumentViewModel viewModelDocument;
 
     RvitemDocumentMemberBinding binding;
+
+    documentZoomClickListener listener;
     
-    public DocumentMemberAdapter(List<Document> documents, Context context) {
+    public DocumentMemberAdapter(List<Document> documents, Context context, documentZoomClickListener listener) {
         this.documents = documents;
         this.context = context;
         this.viewModelDocument = new ViewModelProvider((MainActivity)context).get(DocumentViewModel.class);
+        this.listener = listener;
     }
 
     public static class DocumentViewHolder extends RecyclerView.ViewHolder {
@@ -76,7 +80,7 @@ public class DocumentMemberAdapter extends RecyclerView.Adapter<DocumentMemberAd
         }
 
         holder.layout.setOnClickListener(v -> {
-            viewModelDocument.setSelectedDocument(documents.get(position));
+            listener.onDocumentZoomClick(documents.get(position));
         });
     }
 

@@ -41,6 +41,15 @@
         android:id="@+id/documentMemberFragment"
         android:name="com.example.doggo_android.views.DocumentMemberFragment"
         android:label="fragment_document_member"
-        tools:layout="@layout/fragment_document_member" />
+        tools:layout="@layout/fragment_document_member" >
+        <action
+            android:id="@+id/action_documentMemberFragment_to_documentMemberZoomFragment"
+            app:destination="@id/documentMemberZoomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/documentMemberZoomFragment"
+        android:name="com.example.doggo_android.views.DocumentMemberZoomFragment"
+        android:label="fragment_document_member_zoom"
+        tools:layout="@layout/fragment_document_member_zoom" />
 
 </navigation>
