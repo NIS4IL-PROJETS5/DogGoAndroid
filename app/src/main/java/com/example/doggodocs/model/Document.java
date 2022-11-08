@@ -1,5 +1,7 @@
 package com.example.doggodocs.model;
 
+import android.graphics.drawable.Drawable;
+
 public class Document {
 
     private String documentInscription;
@@ -8,14 +10,16 @@ public class Document {
     private String lienInscription;
     private String lienChien;
     private boolean statut;
+    private int image;
 
-    public Document(String documentInscription, String documentChien, String auteur, boolean statut, String lienInscription, String lienChien) {
+    public Document(String documentInscription, String documentChien, String auteur, boolean statut, String lienInscription, String lienChien, int image) {
         this.documentInscription = documentInscription;
         this.documentChien = documentChien;
         this.auteur = auteur;
         this.statut = statut;
         this.lienInscription = lienInscription;
         this.lienChien = lienChien;
+        this.image = image;
     }
 
     public String getDocumentInscription() {
@@ -64,5 +68,13 @@ public class Document {
 
     public void setLienChien(String lienChien) {
         this.lienChien = lienChien;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 }

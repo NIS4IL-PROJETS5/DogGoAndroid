@@ -1,6 +1,7 @@
 package com.example.doggodocs.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -81,6 +82,7 @@ public class DocumentDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 item.setStatut(true);
+                item.setImage(R.drawable.oui);
                 Navigation.findNavController(requireActivity(), R.id.container).navigate(R.id.action_documentDetailFragment_to_documentListFragment);
             }
         });

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.doggodocs.R;
 import com.example.doggodocs.model.Document;
 
 import java.util.ArrayList;
@@ -28,9 +29,9 @@ public class DocumentSharedViewModel extends ViewModel {
     }
 
     private void initDocs(){
-        documentList.add(new Document("Document d'inscription 1","Document chien 1","Béatricre Mat",false,"https://demo.codeseasy.com/downloads/CodesEasy.pdf","https://demo.codeseasy.com/downloads/CodesEasy.pdf"));
-        documentList.add(new Document("Document d'inscription 2","Document chien 2","Bob Poiz",true,"https://demo.codeseasy.com/downloads/CodesEasy.pdf","https://demo.codeseasy.com/downloads/CodesEasy.pdf"));
-        documentList.add(new Document("Document d'inscription 3","Document chien 3","Jade Gyu",true,"https://demo.codeseasy.com/downloads/CodesEasy.pdf","https://demo.codeseasy.com/downloads/CodesEasy.pdf"));
-        documentList.add(new Document("Document d'inscription 4","Document chien 4","Anna Fusde",false,"https://demo.codeseasy.com/downloads/CodesEasy.pdf","https://demo.codeseasy.com/downloads/CodesEasy.pdf"));
+        documentList.add(new Document("Document d'inscription 1","Document chien 1","Béatricre Mat",false,"https://demo.codeseasy.com/downloads/CodesEasy.pdf","https://demo.codeseasy.com/downloads/CodesEasy.pdf", R.drawable.non));
+        documentList.add(new Document("Document d'inscription 2","Document chien 2","Bob Poiz",true,"https://demo.codeseasy.com/downloads/CodesEasy.pdf","https://demo.codeseasy.com/downloads/CodesEasy.pdf",R.drawable.oui));
+        documentList.add(new Document("Document d'inscription 3","Document chien 3","Jade Gyu",true,"https://demo.codeseasy.com/downloads/CodesEasy.pdf","https://demo.codeseasy.com/downloads/CodesEasy.pdf",R.drawable.oui));
+        documentList.add(new Document("Document d'inscription 4","Document chien 4","Anna Fusde",false,"https://demo.codeseasy.com/downloads/CodesEasy.pdf","https://demo.codeseasy.com/downloads/CodesEasy.pdf",R.drawable.non));
     }
 }

@@ -36,6 +36,7 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.Docume
         final Document document = documents.get(position);
         holder.binding.getRoot().setOnClickListener(view -> listener.onDocumentClicked(document));
         holder.binding.textViewAuteur.setText(document.getAuteur());
+        holder.binding.imageViewValiditeLogo.setImageResource(document.getImage());
     }
 
     @Override
