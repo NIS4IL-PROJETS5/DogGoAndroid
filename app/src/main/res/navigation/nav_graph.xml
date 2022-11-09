@@ -27,11 +27,24 @@
         android:id="@+id/profileFragment"
         android:name="com.example.doggo_android.views.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_candidatureFormFragment"
+            app:destination="@id/candidatureFormFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.doggo_android.views.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/candidatureFormFragment"
+        android:name="com.example.doggo_android.views.CandidatureFormFragment"
+        android:label="fragment_candidature_form"
+        tools:layout="@layout/fragment_candidature_form" >
+        <action
+            android:id="@+id/action_candidatureFormFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
 </navigation>
