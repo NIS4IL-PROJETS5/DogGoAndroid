@@ -49,26 +49,38 @@ public class ContactFragment extends Fragment{
         binding.sendFormContact.setOnClickListener(v -> {
             message = binding.ptMessage.getText().toString();
             reason = binding.spinnerChoiceReason.getSelectedItem().toString();
-            if (!reason.equals("Choisir une raison")){
+            if (!reason.equals("Choisir une raison") && !message.isEmpty()) {
                 Log.d("TEST", "Raison: " + reason);
                 Log.d("TEST", "Message: " + message);
                 Log.d("TEST", "Token: " + getToken.getString("token", "No token Value"));
                 binding.tvErrorMessage.setVisibility(View.GONE);
-            } else {
-                binding.tvErrorMessage.setVisibility(View.VISIBLE);
-                binding.tvErrorMessage.setText(R.string.ReasEmpty);
-            }
-
-            if (message.isEmpty()){
-                binding.tvErrorMessage.setVisibility(View.VISIBLE);
-                binding.tvErrorMessage.setText(R.string.messEmpty);
-            }
-
-
-            if (reason.equals("Choisir une raison") && message.isEmpty()){
-                binding.tvErrorMessage.setVisibility(View.VISIBLE);
-                binding.tvErrorMessage.setText(R.string.allEmpty);
+            }else {
+                getErrorMessage();
             }
         });
+    }
+
+    public void getErrorMessage() {
+
+        message = binding.ptMessage.getText().toString();
+        reason = binding.spinnerChoiceReason.getSelectedItem().toString();
+
+        if (!reason.equals("Choisir une raison")){
+            binding.tvErrorMessage.setVisibility(View.GONE);
+        } else {
+            binding.tvErrorMessage.setVisibility(View.VISIBLE);
+            binding.tvErrorMessage.setText(R.string.ReasEmpty);
+        }
+
+        if (message.isEmpty()){
+            binding.tvErrorMessage.setVisibility(View.VISIBLE);
+            binding.tvErrorMessage.setText(R.string.messEmpty);
+        }
+
+        if (reason.equals("Choisir une raison") && message.isEmpty()){
+            binding.tvErrorMessage.setVisibility(View.VISIBLE);
+            binding.tvErrorMessage.setText(R.string.allEmpty);
+        }
+
     }
 }
