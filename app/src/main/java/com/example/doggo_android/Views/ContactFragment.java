@@ -22,6 +22,8 @@ public class ContactFragment extends Fragment{
     private String message;
     private String reason;
 
+    private int intReason;
+
 
 
     public ContactFragment() {
@@ -47,9 +49,12 @@ public class ContactFragment extends Fragment{
         SharedPreferences getToken = requireActivity().getSharedPreferences("DogGo", 0);
 
         binding.sendFormContact.setOnClickListener(v -> {
+
+            intReason = binding.spinnerChoiceReason.getSelectedItemPosition();
+
             message = binding.ptMessage.getText().toString();
             reason = binding.spinnerChoiceReason.getSelectedItem().toString();
-            if (!reason.equals("Choisir une raison") && !message.isEmpty()) {
+            if (intReason != 0 && !message.isEmpty()) {
                 Log.d("TEST", "Raison: " + reason);
                 Log.d("TEST", "Message: " + message);
                 Log.d("TEST", "Token: " + getToken.getString("token", "No token Value"));
@@ -60,12 +65,13 @@ public class ContactFragment extends Fragment{
         });
     }
 
+    /**
+     * If the reason is not selected, the error message will be displayed. If the message is empty, the
+     * error message will be displayed. If the reason is not selected and the message is empty, the
+     * error message will be displayed
+     */
     public void getErrorMessage() {
-
-        message = binding.ptMessage.getText().toString();
-        reason = binding.spinnerChoiceReason.getSelectedItem().toString();
-
-        if (!reason.equals("Choisir une raison")){
+        if (intReason != 0) {
             binding.tvErrorMessage.setVisibility(View.GONE);
         } else {
             binding.tvErrorMessage.setVisibility(View.VISIBLE);
@@ -77,7 +83,7 @@ public class ContactFragment extends Fragment{
             binding.tvErrorMessage.setText(R.string.messEmpty);
         }
 
-        if (reason.equals("Choisir une raison") && message.isEmpty()){
+        if (intReason == 0 && message.isEmpty()){
             binding.tvErrorMessage.setVisibility(View.VISIBLE);
             binding.tvErrorMessage.setText(R.string.allEmpty);
         }
