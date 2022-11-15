@@ -1,12 +1,12 @@
 package com.example.doggo_android.Views;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +14,14 @@ import android.view.ViewGroup;
 
 import com.example.doggo_android.R;
 import com.example.doggo_android.databinding.FragmentContactBinding;
-import com.example.doggo_android.databinding.FragmentProfileBinding;
 
 
-public class ContactFragment extends Fragment {
+public class ContactFragment extends Fragment{
 
     FragmentContactBinding binding;
     private String message;
+    private String reason;
+
 
 
     public ContactFragment() {
@@ -33,7 +34,7 @@ public class ContactFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.binding = FragmentContactBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -43,9 +44,31 @@ public class ContactFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        SharedPreferences getToken = requireActivity().getSharedPreferences("DogGo", 0);
+
         binding.sendFormContact.setOnClickListener(v -> {
             message = binding.ptMessage.getText().toString();
-            Log.d("TEST", "onViewCreated: " + message);
+            reason = binding.spinnerChoiceReason.getSelectedItem().toString();
+            if (!reason.equals("Choisir une raison")){
+                Log.d("TEST", "Raison: " + reason);
+                Log.d("TEST", "Message: " + message);
+                Log.d("TEST", "Token: " + getToken.getString("token", "No token Value"));
+                binding.tvErrorMessage.setVisibility(View.GONE);
+            } else {
+                binding.tvErrorMessage.setVisibility(View.VISIBLE);
+                binding.tvErrorMessage.setText(R.string.ReasEmpty);
+            }
+
+            if (message.isEmpty()){
+                binding.tvErrorMessage.setVisibility(View.VISIBLE);
+                binding.tvErrorMessage.setText(R.string.messEmpty);
+            }
+
+
+            if (reason.equals("Choisir une raison") && message.isEmpty()){
+                binding.tvErrorMessage.setVisibility(View.VISIBLE);
+                binding.tvErrorMessage.setText(R.string.allEmpty);
+            }
         });
     }
 }

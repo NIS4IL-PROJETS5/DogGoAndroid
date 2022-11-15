@@ -2,4 +2,15 @@
     <string name="app_name">DogGo-Android</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="messEmpty">Veuillez écrire un message !</string>
+    <string name="ReasEmpty">Veuillez choisir une raison !</string>
+    <string name="allEmpty">Veuillez choisir une raison et écrire un message !</string>
+
+    <string-array name="reason_array">
+        <item>Choisir une raison</item>
+        <item>Une demande de renseignements (ou d\'inscription)</item>
+        <item>Envoyer un messages aux moniteurs (pour les adhérents)</item>
+        <item>Contacter le responsable de ce site internet</item>
+    </string-array>
+
 </resources>
