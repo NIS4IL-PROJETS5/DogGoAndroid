@@ -17,8 +17,8 @@ import com.example.doggo_android.R;
 import com.example.doggo_android.databinding.RvitemDocumentMemberBinding;
 import com.example.doggo_android.Enums.DOC_STATUS;
 import com.example.doggo_android.Interfaces.documentZoomClickListener;
-import com.example.doggo_android.models.Document;
-import com.example.doggo_android.viewmodels.DocumentViewModel;
+import com.example.doggo_android.Models.Document;
+import com.example.doggo_android.ViewModels.DocumentViewModel;
 
 import java.util.List;
 

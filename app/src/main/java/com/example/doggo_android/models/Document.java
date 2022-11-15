@@ -1,4 +1,4 @@
-package com.example.doggo_android.models;
+package com.example.doggo_android.Models;
 
 import android.graphics.Bitmap;
 

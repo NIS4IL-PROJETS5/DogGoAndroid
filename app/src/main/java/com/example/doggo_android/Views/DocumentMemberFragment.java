@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import com.example.doggo_android.R;
 import com.example.doggo_android.Adapters.DocumentMemberAdapter;
 import com.example.doggo_android.databinding.FragmentDocumentMemberBinding;
-import com.example.doggo_android.viewmodels.DocumentViewModel;
+import com.example.doggo_android.ViewModels.DocumentViewModel;
 
 
 public class DocumentMemberFragment extends Fragment {
