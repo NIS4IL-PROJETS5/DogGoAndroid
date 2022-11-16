@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,75 +11,87 @@
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="0"
-        android:backgroundTint="#000000"
         android:ems="10"
-        android:hint="Nom"
+        android:hint="nom"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextFirstName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="0"
         android:ems="10"
         android:hint="Prenom"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="0"
         android:ems="10"
         android:hint="Mail"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextDogName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="0"
         android:ems="10"
         android:hint="nom du chien"
         android:inputType="text"
         android:minHeight="48dp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextDogRace"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="0"
         android:ems="10"
         android:hint="race du chien"
         android:inputType="text"
         android:minHeight="48dp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextDogAge"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="0"
         android:ems="10"
         android:hint="age du chien"
         android:inputType="text"
         android:minHeight="48dp"
+        android:textSize="16sp"
         android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageViewSelectFile"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="0"
+        tools:src="@tools:sample/avatars" />
 
     <LinearLayout
         android:layout_width="match_parent"

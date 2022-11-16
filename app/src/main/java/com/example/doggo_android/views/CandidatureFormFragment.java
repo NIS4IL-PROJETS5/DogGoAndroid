@@ -4,19 +4,24 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.doggo_android.R;
+import com.example.doggo_android.databinding.FragmentCandidatureFormBinding;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,6 +31,7 @@ import java.net.URISyntaxException;
 
 
 public class CandidatureFormFragment extends Fragment {
+    FragmentCandidatureFormBinding binding;
 
 
     public CandidatureFormFragment() {
@@ -65,12 +71,16 @@ public class CandidatureFormFragment extends Fragment {
                     Uri uri = data.getData();
                     Log.d("TAG", "File Uri: " + uri.toString());
                     // Get the path
-                    String path = getContext().getFilesDir().getAbsolutePath();
+                    String path = requireContext().getFilesDir().getAbsolutePath();
                     Log.d("TAG", "File Path: " + path);
                     // Get the file instance
-                        File file = new File(path);
+                        File imgFile = new File(uri.getPath());
                     // Initiate the upload
-                     
+                    Uri selectedImage = data.getData();
+                    ImageView imageView = binding.imageViewSelectFile;
+                    imageView.setImageURI(selectedImage);
+
+
                 }
                 break;
         }
@@ -81,12 +91,13 @@ public class CandidatureFormFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_candidature_form, container, false);
-        Button button = view.findViewById(R.id.button_select_file);
+        this.binding = FragmentCandidatureFormBinding.inflate(inflater, container, false);
+        Button button = binding.buttonSelectFile;
         button.setOnClickListener((View.OnClickListener) v -> {
             showFileChooser();
         });
 
-        return view;
+        return binding.getRoot();
     }
+
 }
