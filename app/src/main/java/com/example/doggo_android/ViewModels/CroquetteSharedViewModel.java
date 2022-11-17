@@ -29,7 +29,7 @@ public class CroquetteSharedViewModel extends ViewModel {
     }
 
     private void initVets(){
-        croquettes.add(new Croquette("Iams Vitality - poulet","pour Chiens Seniors Grande Race. Aliment 100 % complet et équilibré. Sans épaississant. Sans OGM . Sans colorants . Sans blé",40,0));
-        croquettes.add(new Croquette("Iams Vitality - allégées", "pour chiens Adultes Petite et Moyenne Race. Aliment 100 % complet et équilibré. Sans épaississant. Sans OGM . Sans colorants . Sans blé",40,0));
+        croquettes.add(new Croquette("Iams - poulet","pour Chiens Seniors Grande Race.",40,0));
+        croquettes.add(new Croquette("Iams - allégées", "pour chiens Adultes Petite et Moyenne Race.",40,0));
     }
 }

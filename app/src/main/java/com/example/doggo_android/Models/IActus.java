@@ -30,6 +30,7 @@ public class IActus {
     public Date getEndDate() {return endDate;}
     public String getTitle() {return title;}
     public String getDescription() {return description;}
+    public void setDescription(String description) {this.description = description;}
     public boolean isHidden() {return hidden;}
     public Date getHiddenDate() {return hiddenDate;}
     public boolean isDisabled() {return disabled;}
