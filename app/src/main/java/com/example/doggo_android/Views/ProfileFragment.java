@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,8 +67,16 @@ public class ProfileFragment extends Fragment {
             Log.e(TAG, "onViewCreated: " + e.getMessage());
         }
 
-        binding.profileLoginButton.setOnClickListener(v -> handleLoginDialog());
-        binding.profileSignupButton.setOnClickListener(v -> handleSignupDialog());
+        binding.buttonProfileModify2.setOnClickListener((View.OnClickListener) v -> {
+            //naviagte to candidature form
+            NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
+            assert navHostFragment != null;
+            NavController controller = navHostFragment.getNavController();
+            controller.navigate(R.id.action_profileFragment_to_candidatureFormFragment);
+        });
+
+//        binding.profileLoginButton.setOnClickListener(v -> handleLoginDialog());
+//        binding.profileSignupButton.setOnClickListener(v -> handleSignupDialog());
     }
 
     private void handleLoginDialog() {
@@ -93,12 +103,12 @@ public class ProfileFragment extends Fragment {
                     switch (response.code()) {
                         case 200:
                             IUser result = response.body();
-                           //store the token in SharedPreferences
+                            //store the token in SharedPreferences
                             SharedPreferences pref = requireContext().getSharedPreferences("DogGo", 0); // 0 - for private mode
                             SharedPreferences.Editor editor = pref.edit();
                             editor.putString("token", result.getToken()); // Storing string
                             editor.commit(); // commit changes
-                            
+
                             Utils.alertDialogHandler(getContext(), "Login Success", "UserId: " + result.getId() + "\n" + "Role: " + result.getRole() + "\n" + "Token: " + result.getToken());
                             break;
 
