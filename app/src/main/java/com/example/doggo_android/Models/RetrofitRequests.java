@@ -23,4 +23,7 @@ public interface RetrofitRequests {
 
     @GET("api/auth/check")
     Call<Void> executeCheckToken(@Header("Authorization") String token);
+    
+    @POST("api/contacts/create")
+    Call<IContact> executeContact(@Body HashMap<String, String> map, @Header("Authorization") String token);
 }
