@@ -26,11 +26,13 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.doggo_android.Views.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
+        android:label="fragment_profile">
         <action
-            android:id="@+id/action_profileFragment_to_documentMemberFragment"
-            app:destination="@id/documentMemberFragment" />
+            android:id="@+id/action_profileFragment_to_candidatureFormFragment"
+            app:destination="@id/candidatureFormFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_connectionFragment"
+            app:destination="@id/connectionFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -38,18 +40,22 @@
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
-        android:id="@+id/documentMemberFragment"
-        android:name="com.example.doggo_android.views.DocumentMemberFragment"
-        android:label="fragment_document_member"
-        tools:layout="@layout/fragment_document_member" >
+        android:id="@+id/candidatureFormFragment"
+        android:name="com.example.doggo_android.Views.CandidatureFormFragment"
+        android:label="fragment_candidature_form"
+        tools:layout="@layout/fragment_candidature_form" >
         <action
-            android:id="@+id/action_documentMemberFragment_to_documentMemberZoomFragment"
-            app:destination="@id/documentMemberZoomFragment" />
+            android:id="@+id/action_candidatureFormFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
-        android:id="@+id/documentMemberZoomFragment"
-        android:name="com.example.doggo_android.views.DocumentMemberZoomFragment"
-        android:label="fragment_document_member_zoom"
-        tools:layout="@layout/fragment_document_member_zoom" />
+        android:id="@+id/connectionFragment"
+        android:name="com.example.doggo_android.Views.ConnectionFragment"
+        android:label="fragment_connection"
+        tools:layout="@layout/fragment_connection" >
+        <action
+            android:id="@+id/action_connectionFragment_to_profileFragment2"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
 </navigation>

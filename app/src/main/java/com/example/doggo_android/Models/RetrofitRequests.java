@@ -21,4 +21,6 @@ public interface RetrofitRequests {
 
     @GET("/api/actualites/limit/{limit}")
     Call<ArrayList<IActus>> executeGetActus(@Header("Authorization") String token, @Path("limit") String limit);
+    @GET("api/auth/check")
+    Call<Void> executeCheckToken(@Header("Authorization") String token);
 }
