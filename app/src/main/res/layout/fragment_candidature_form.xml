@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#AB673AB7"
     android:orientation="vertical"
-    tools:context=".views.CandidatureFormFragment">
+    tools:context=".Views.CandidatureFormFragment">
 
     <EditText
         android:id="@+id/editTextName"

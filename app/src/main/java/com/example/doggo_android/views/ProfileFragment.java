@@ -56,124 +56,52 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.checkToken();
 
-        String apiUrl = Utils.getConfigValue(requireContext(), "api_url");
-
-        try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(apiUrl).addConverterFactory(GsonConverterFactory.create()).build();
-            requests = retrofit.create(RetrofitRequests.class);
-        } catch (Exception e) {
-            Log.e(TAG, "onViewCreated: " + e.getMessage());
-        }
-
-        binding.buttonProfileModify2.setOnClickListener((View.OnClickListener) v -> {
+        binding.buttonProfileModify2.setOnClickListener(v -> {
             //naviagte to candidature form
             NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
             assert navHostFragment != null;
             NavController controller = navHostFragment.getNavController();
             controller.navigate(R.id.action_profileFragment_to_candidatureFormFragment);
         });
-
-//        binding.profileLoginButton.setOnClickListener(v -> handleLoginDialog());
-//        binding.profileSignupButton.setOnClickListener(v -> handleSignupDialog());
     }
 
-    private void handleLoginDialog() {
-        View view = getLayoutInflater().inflate(R.layout.dialog_login, null);
+    public void checkToken() {
+        String apiUrl = Utils.getConfigValue(requireContext(), "api_url");
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(apiUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            requests = retrofit.create(RetrofitRequests.class);
+        } catch (Exception e) {
+            Log.e(TAG, "onCreateView: ", e);
+        }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        SharedPreferences preferences = requireActivity().getSharedPreferences("DogGo", 0);
+        String token = preferences.getString("token", null);
+        Call<Void> call = requests.executeCheckToken("Bearer " + token);
 
-        builder.setView(view).show();
-
-        Button loginBtn = view.findViewById(R.id.dialog_login_button);
-        EditText emailEdit = view.findViewById(R.id.dialog_login_email_input);
-        EditText passwordEdit = view.findViewById(R.id.dialog_login_password_input);
-
-        loginBtn.setOnClickListener(v -> {
-            HashMap<String, String> map = new HashMap<>();
-            map.put("email", emailEdit.getText().toString());
-            map.put("password", passwordEdit.getText().toString());
-
-            Call<IUser> call = requests.executeLogin(map);
-
-            call.enqueue(new Callback<IUser>() {
-                @Override
-                public void onResponse(@NonNull Call<IUser> call, @NonNull Response<IUser> response) {
-                    switch (response.code()) {
-                        case 200:
-                            IUser result = response.body();
-                            //store the token in SharedPreferences
-                            SharedPreferences pref = requireContext().getSharedPreferences("DogGo", 0); // 0 - for private mode
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("token", result.getToken()); // Storing string
-                            editor.commit(); // commit changes
-
-                            Utils.alertDialogHandler(getContext(), "Login Success", "UserId: " + result.getId() + "\n" + "Role: " + result.getRole() + "\n" + "Token: " + result.getToken());
-                            break;
-
-                        case 401:
-                            Utils.alertDialogHandler(getContext(), "Login Failed", "Wrong email or password");
-                            break;
-
-                        case 500:
-                            Utils.alertDialogHandler(getContext(), "Login Failed", "Server Error");
-                            break;
-                    }
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 200) {
+                    Log.d(TAG, "onResponse: Token is valid");
+                } else {
+                    Log.d(TAG, "onResponse: Token is invalid");
+                    NavController navController = NavHostFragment.findNavController(ProfileFragment.this);
+                    navController.navigate(R.id.action_profileFragment_to_connectionFragment);
                 }
+            }
 
-                @Override
-                public void onFailure(Call<IUser> call, Throwable t) {
-                    Utils.alertDialogHandler(getContext(), "Error", t.getMessage());
-                }
-            });
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e(TAG, "onFailure: ", t);
+            }
         });
     }
 
-    private void handleSignupDialog() {
 
-        View view = getLayoutInflater().inflate(R.layout.dialog_signup, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setView(view).show();
-
-        Button registerBtn = view.findViewById(R.id.dialog_signup_button);
-        EditText emailEdit = view.findViewById(R.id.dialog_signup_email_input);
-        EditText passwordEdit = view.findViewById(R.id.dialog_signup_password_input);
-        EditText nameEdit = view.findViewById(R.id.dialog_signup_name_input);
-
-        registerBtn.setOnClickListener(v -> {
-            HashMap<String, String> map = new HashMap<>();
-            map.put("email", emailEdit.getText().toString());
-            map.put("password", passwordEdit.getText().toString());
-            map.put("name", nameEdit.getText().toString());
-
-            Call<Void> call = requests.executeRegister(map);
-
-            call.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                    switch (response.code()) {
-                        case 201:
-                            Utils.alertDialogHandler(getContext(), "Success", "User created successfully");
-                            break;
-
-                        case 400:
-                            Utils.alertDialogHandler(getContext(), "Error", "Invalid email or password");
-                            break;
-
-                        case 500:
-                            Utils.alertDialogHandler(getContext(), "Error", "Internal server error");
-                            break;
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                    Utils.alertDialogHandler(getContext(), "Error", t.getMessage());
-                }
-            });
-        });
-    }
 }
 

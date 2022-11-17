@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface RetrofitRequests {
@@ -12,4 +14,7 @@ public interface RetrofitRequests {
 
     @POST("api/auth/signup")
     Call<Void> executeRegister(@Body HashMap<String, String> map);
+
+    @GET("api/auth/check")
+    Call<Void> executeCheckToken(@Header("Authorization") String token);
 }
