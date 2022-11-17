@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,9 +40,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HomeFragment extends Fragment {
 
     FragmentHomeBinding binding;
-    RetrofitRequests requests;
     ArrayList<IActus> actus;
     ActualitesAdapter adapter;
+    Integer page = 1;
+    RetrofitRequests requests;
+    String token;
 
     public HomeFragment() {
 
@@ -62,50 +65,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("HomeFragment", "START");
 
         String apiUrl = Utils.getConfigValue(requireContext(), "api_url");
-//
-//        try {
-//            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl(apiUrl).addConverterFactory(GsonConverterFactory.create()).build();
-//            requests = retrofit.create(RetrofitRequests.class);
-//        } catch (Exception e) {
-//            Log.e("HomeFragment", "onViewCreated: " + e.getMessage());
-//        }
-
-        Log.d("HomeFragment", "AVANT CALL");
-        this.handleGetActualites(apiUrl);
-    }
-
-
-    public void handleGetActualites(String apiUrl) {
-
-//        SharedPreferences preferences = requireActivity().getSharedPreferences("DogGo", 0);
-//        String token = preferences.getString("token", null);
-//        Log.d("HomeFragment", "handleGetActualites: " + token);
-//        Call<IActus> call = requests.executeGetActus("Bearer " + token, "1");
-//
-//        call.enqueue(new Callback<IActus>() {
-//            @Override
-//            public void onResponse(Call<IActus> call, Response<IActus> response) {
-//                switch (response.code()) {
-//                    case 200:
-//                        IActus actus = response.body();
-//                        Log.d("HomeFragment", "onResponse" + actus);
-//                        break;
-//
-//                    default:
-//                        Log.e("HomeFragment", "onResponse: " + response.code());
-//                        break;
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<IActus> call, Throwable t) {
-//                Log.e("HomeFragment", "onFailure: " + t.getMessage());
-//            }
-//        });
-
         // on below line we are creating a retrofit
         // builder and passing our base url
         Retrofit retrofit = new Retrofit.Builder()
@@ -116,13 +77,20 @@ public class HomeFragment extends Fragment {
                 // at last we are building our retrofit builder.
                 .build();
         // below line is to create an instance for our retrofit api class.
-        RetrofitRequests requests = retrofit.create(RetrofitRequests.class);
+        requests = retrofit.create(RetrofitRequests.class);
 
         // on below line we are calling a method to get all the courses from API.
         SharedPreferences preferences = requireActivity().getSharedPreferences("DogGo", 0);
-        String token = preferences.getString("token", null);
-        Log.d("HomeFragment", "handleGetActualites: " + token);
-        Call<ArrayList<IActus>> call = requests.executeGetActus("Bearer " + token, "1");
+        token = preferences.getString("token", "");
+
+        this.handleGetActualites();
+    }
+
+
+    public void handleGetActualites() {
+
+
+        Call<ArrayList<IActus>> call = requests.executeGetActus("Bearer " + token, String.valueOf(page));
 
         // on below line we are calling method to enqueue and calling
         // all the data from array list.
@@ -131,13 +99,10 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<ArrayList<IActus>> call, Response<ArrayList<IActus>> response) {
                 // inside on response method we are checking
                 // if the response is success or not.
-                Log.d("HomeFragment", "onResponse: " + response.code());
                 if (response.isSuccessful()) {
-
 
                     // below line is to add our data from api to our array list.
                     actus = response.body();
-                    Log.d("HomeFragment", "onResponse: " + actus);
 
                     // below line we are running a loop to add data to our adapter class.
                     for (int i = 0; i < actus.size(); i++) {
@@ -151,7 +116,23 @@ public class HomeFragment extends Fragment {
 
                         // below line is to set adapter to our recycler view.
                         binding.fragmentRvActualitesRv.setAdapter(adapter);
+
                     }
+                    binding.fragmentRvActualitesRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                        @Override
+                        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                            super.onScrollStateChanged(recyclerView, newState);
+                            if (!recyclerView.canScrollVertically(1)) {
+                                // on bottom of list
+                                Toast.makeText(requireContext(), "Bottom of list", Toast.LENGTH_SHORT).show();
+                                page++;
+                                handleGetActualites();
+                            }
+                        }
+                    });
+                    binding.fragmentActualitesRvTv.setVisibility(View.GONE);
+                } else {
+                    binding.fragmentActualitesRvTv.setVisibility(View.VISIBLE);
                 }
             }
 

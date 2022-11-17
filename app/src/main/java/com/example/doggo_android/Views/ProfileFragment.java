@@ -80,7 +80,7 @@ public class ProfileFragment extends Fragment {
         }
 
         SharedPreferences preferences = requireActivity().getSharedPreferences("DogGo", 0);
-        String token = preferences.getString("token", null);
+        String token = preferences.getString("token", "");
         Call<Void> call = requests.executeCheckToken("Bearer " + token);
 
         call.enqueue(new Callback<Void>() {
@@ -90,8 +90,7 @@ public class ProfileFragment extends Fragment {
                     Log.d(TAG, "onResponse: Token is valid");
                 } else {
                     Log.d(TAG, "onResponse: Token is invalid");
-                    NavController navController = NavHostFragment.findNavController(ProfileFragment.this);
-                    navController.navigate(R.id.action_profileFragment_to_connectionFragment);
+                    NavHostFragment.findNavController(ProfileFragment.this).navigate(R.id.action_profileFragment_to_connectionFragment);
                 }
             }
 
