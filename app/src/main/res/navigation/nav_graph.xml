@@ -15,7 +15,11 @@
     android:id="@+id/membersFragment"
     android:name="com.example.doggo_android.Views.MembersFragment"
     android:label="fragment_members"
-    tools:layout="@layout/fragment_members" />
+    tools:layout="@layout/fragment_members" >
+        <action
+            android:id="@+id/action_membersFragment_to_croquetteListFragment"
+            app:destination="@id/croquetteListFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/contactFragment"
@@ -56,6 +60,24 @@
         <action
             android:id="@+id/action_connectionFragment_to_profileFragment2"
             app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/croquetteListFragment"
+        android:name="com.example.doggo_android.Views.CroquetteListFragment"
+        android:label="fragment_croquette_list"
+        tools:layout="@layout/fragment_croquette_list" >
+        <action
+            android:id="@+id/action_croquetteListFragment_to_panierListFragment"
+            app:destination="@id/panierListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/panierListFragment"
+        android:name="com.example.doggo_android.Views.PanierListFragment"
+        android:label="fragment_panier_list"
+        tools:layout="@layout/fragment_panier_list" >
+        <action
+            android:id="@+id/action_panierListFragment_to_croquetteListFragment"
+            app:destination="@id/croquetteListFragment" />
     </fragment>
 
 </navigation>

@@ -14,11 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doggo_android.MainActivity;
 import com.example.doggo_android.R;
-import com.example.doggo_android.databinding.RvitemDocumentMemberBinding;
 import com.example.doggo_android.Enums.DOC_STATUS;
 import com.example.doggo_android.Interfaces.documentZoomClickListener;
 import com.example.doggo_android.Models.Document;
 import com.example.doggo_android.ViewModels.DocumentViewModel;
+import com.example.doggo_android.databinding.RvItemDocumentMemberBinding;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class DocumentMemberAdapter extends RecyclerView.Adapter<DocumentMemberAd
 
     DocumentViewModel viewModelDocument;
 
-    RvitemDocumentMemberBinding binding;
+    RvItemDocumentMemberBinding binding;
 
     documentZoomClickListener listener;
     
@@ -47,7 +47,7 @@ public class DocumentMemberAdapter extends RecyclerView.Adapter<DocumentMemberAd
 
 
 
-        public DocumentViewHolder(@NonNull View itemView, RvitemDocumentMemberBinding binding) {
+        public DocumentViewHolder(@NonNull View itemView, RvItemDocumentMemberBinding binding) {
             super(itemView);
             name = binding.ItemRecyclerViewDocumentName;
             statusDescription = binding.ItemRecyclerViewDocumentStatus;
@@ -58,7 +58,7 @@ public class DocumentMemberAdapter extends RecyclerView.Adapter<DocumentMemberAd
 
     @Override
     public DocumentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        binding = RvitemDocumentMemberBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        binding = RvItemDocumentMemberBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new DocumentViewHolder(binding.getRoot(),binding);
     }
 
