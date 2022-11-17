@@ -6,7 +6,17 @@
     android:layout_height="match_parent"
     android:background="#74FF9800"
     android:orientation="vertical"
-    tools:context=".views.ProfileFragment">
+    tools:context=".Views.ProfileFragment">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_profile_signout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_weight="0"
+        android:clickable="true"
+        android:src="@drawable/ic_baseline_highlight_off_24"
+        app:backgroundTint="@color/design_default_color_error" />
 
     <ImageView
         android:id="@+id/imageView"

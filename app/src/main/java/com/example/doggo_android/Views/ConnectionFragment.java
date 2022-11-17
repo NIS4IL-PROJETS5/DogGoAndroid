@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.example.doggo_android.Models.IUser;
 import com.example.doggo_android.Models.RetrofitRequests;
 import com.example.doggo_android.R;
 import com.example.doggo_android.Utils;
+import com.example.doggo_android.ViewModels.ConnectionViewModel;
 import com.example.doggo_android.databinding.FragmentConnectionBinding;
 
 import java.util.HashMap;
@@ -35,6 +37,7 @@ public class ConnectionFragment extends Fragment {
 
     FragmentConnectionBinding binding;
     RetrofitRequests requests;
+    ConnectionViewModel connectionViewModel;
     private static final String TAG = "ConnectionFragment";
     public ConnectionFragment() {
         // Required empty public constructor
@@ -92,6 +95,9 @@ public class ConnectionFragment extends Fragment {
                     switch (response.code()) {
                         case 200:
                             IUser result = response.body();
+                            connectionViewModel = new ViewModelProvider(requireActivity()).get(ConnectionViewModel.class);
+                            connectionViewModel.setUser(result);
+
                             //store the token in SharedPreferences
                             SharedPreferences pref = requireContext().getSharedPreferences("DogGo", 0); // 0 - for private mode
                             SharedPreferences.Editor editor = pref.edit();

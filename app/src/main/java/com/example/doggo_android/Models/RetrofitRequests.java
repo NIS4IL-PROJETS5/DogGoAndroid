@@ -18,11 +18,14 @@ public interface RetrofitRequests {
     @POST("api/auth/signup")
     Call<Void> executeRegister(@Body HashMap<String, String> map);
 
+    @GET("/api/auth/user/{id}")
+    Call<IUser> executeGetUser(@Path("id") String userId, @Header("Authorization") String token);
+
     @GET("/api/actualites/limit/{limit}")
     Call<ArrayList<IActus>> executeGetActus(@Header("Authorization") String token, @Path("limit") String limit);
 
     @GET("api/auth/check")
-    Call<Void> executeCheckToken(@Header("Authorization") String token);
+    Call<IUser> executeCheckToken(@Header("Authorization") String token);
     
     @POST("api/contacts/create")
     Call<IContact> executeContact(@Body HashMap<String, String> map, @Header("Authorization") String token);

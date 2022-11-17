@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -21,6 +22,7 @@ import com.example.doggo_android.Models.RetrofitRequests;
 import com.example.doggo_android.Models.IUser;
 import com.example.doggo_android.R;
 import com.example.doggo_android.Utils;
+import com.example.doggo_android.ViewModels.ConnectionViewModel;
 import com.example.doggo_android.databinding.FragmentProfileBinding;
 
 import java.util.HashMap;
@@ -36,6 +38,9 @@ public class ProfileFragment extends Fragment {
 
     FragmentProfileBinding binding;
     RetrofitRequests requests;
+    String token;
+    ConnectionViewModel connectionViewModel;
+    IUser user;
     private static final String TAG = "ProfileFragment";
 
     public ProfileFragment() {
@@ -56,38 +61,45 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        connectionViewModel = new ViewModelProvider(requireActivity()).get(ConnectionViewModel.class);
+        this.requests = Utils.getRetrofitCon(requireContext());
+        this.token = Utils.getToken(requireContext());
+        this.user = connectionViewModel.getUser();
         this.checkToken();
 
         binding.buttonProfileModify2.setOnClickListener(v -> {
-            //naviagte to candidature form
             NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
             assert navHostFragment != null;
             NavController controller = navHostFragment.getNavController();
             controller.navigate(R.id.action_profileFragment_to_candidatureFormFragment);
         });
+
+        binding.buttonProfileSignout.setOnClickListener(v -> {
+            SharedPreferences preferences = getActivity().getSharedPreferences("token", 0);
+            preferences.edit().clear().apply();
+            NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
+            assert navHostFragment != null;
+            NavController controller = navHostFragment.getNavController();
+            controller.navigate(R.id.action_profileFragment_to_connectionFragment);
+        });
     }
 
     public void checkToken() {
-        String apiUrl = Utils.getConfigValue(requireContext(), "api_url");
-        try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(apiUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            requests = retrofit.create(RetrofitRequests.class);
-        } catch (Exception e) {
-            Log.e(TAG, "onCreateView: ", e);
-        }
+        Call<IUser> call = this.requests.executeCheckToken("Bearer " + this.token);
 
-        SharedPreferences preferences = requireActivity().getSharedPreferences("DogGo", 0);
-        String token = preferences.getString("token", "");
-        Call<Void> call = requests.executeCheckToken("Bearer " + token);
-
-        call.enqueue(new Callback<Void>() {
+        call.enqueue(new Callback<IUser>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<IUser> call, Response<IUser> response) {
                 if (response.code() == 200) {
                     Log.d(TAG, "onResponse: Token is valid");
+                    if (user.getName() == null) {
+                        user = response.body();
+                        connectionViewModel.setUser(user);
+                        fetchUser();
+                    } else {
+                        binding.textViewPrenom.setText(user.getName());
+                        binding.textViewNom.setText(user.getSurname());
+                    }
                 } else {
                     Log.d(TAG, "onResponse: Token is invalid");
                     NavHostFragment.findNavController(ProfileFragment.this).navigate(R.id.action_profileFragment_to_connectionFragment);
@@ -95,12 +107,35 @@ public class ProfileFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<IUser> call, Throwable t) {
                 Log.e(TAG, "onFailure: ", t);
             }
         });
     }
 
+    public void fetchUser() {
 
+        Call<IUser> call = this.requests.executeGetUser(user.getId(), "Bearer " + this.token);
+
+        call.enqueue(new Callback<IUser>() {
+            @Override
+            public void onResponse(Call<IUser> call, Response<IUser> response) {
+                if (response.code() == 200) {
+                    Log.d(TAG, "onResponse: User fetched");
+                    user = response.body();
+                    connectionViewModel.setUser(user);
+                    binding.textViewPrenom.setText(user.getName());
+                    binding.textViewNom.setText(user.getSurname());
+                } else {
+                    Log.d(TAG, "onResponse: User not fetched");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<IUser> call, Throwable t) {
+                Log.e(TAG, "onFailure: ", t);
+            }
+        });
+    }
 }
 

@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment {
                             super.onScrollStateChanged(recyclerView, newState);
                             if (!recyclerView.canScrollVertically(1)) {
                                 page++;
-                                Toast.makeText(requireContext(), "Page" + page, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(requireContext(), "Page " + page, Toast.LENGTH_SHORT).show();
                                 handleGetActualites();
                             }
                         }
