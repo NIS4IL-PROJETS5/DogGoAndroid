@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rv_actualites_cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="10dp"
+    app:cardMaxElevation="12dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
+
+    <!--
+    In the above cardview widget
+    cardelevation property will give elevation to your card view
+    card corner radius will provide radius to your card view
+    card background color will give background color to your card view
+    card max elevation will give the cardview maximum elevation
+    card prevent corner overlap will add padding to CardView on v20 and before to prevent intersections between the Card content and rounded corners.
+    card use compact padding will add padding in API v21+ as well to have the same measurements with previous versions.
+    below are the two widgets imageview and text view we are displaying inside our card view.
+    -->
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/rv_actualites_full_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/rv_actualites_img"
+            android:layout_width="402dp"
+            android:layout_height="207dp"
+            android:layout_gravity="center"
+            android:layout_margin="50dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/post_example" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rv_actualites_top_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/rv_actualites_top_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/app_name"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rv_actualites_bottom_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
+            <TextView
+                android:id="@+id/rv_actualites_bottom_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/app_name"
+                android:textColor="#8D8D8D"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.cardview.widget.CardView>
