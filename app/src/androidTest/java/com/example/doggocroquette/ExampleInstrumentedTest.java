@@ -1,4 +1,4 @@
-package com.example.doggo_android;
+package com.example.doggocroquette;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.doggo_android", appContext.getPackageName());
+        assertEquals("com.example.doggocroquette", appContext.getPackageName());
     }
 }

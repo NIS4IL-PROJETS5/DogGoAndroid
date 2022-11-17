@@ -3,35 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/croquetteListFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.doggo_android.views.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
-
+        android:id="@+id/croquetteListFragment"
+        android:name="com.example.doggocroquette.fragment.CroquetteListFragment"
+        android:label="fragment_croquette_list"
+        tools:layout="@layout/fragment_croquette_list" >
+        <action
+            android:id="@+id/action_croquetteListFragment_to_panierListFragment"
+            app:destination="@id/panierListFragment" />
+    </fragment>
     <fragment
-    android:id="@+id/membersFragment"
-    android:name="com.example.doggo_android.views.MembersFragment"
-    android:label="fragment_members"
-    tools:layout="@layout/fragment_members" />
-
-    <fragment
-        android:id="@+id/contactFragment"
-        android:name="com.example.doggo_android.views.ContactFragment"
-        android:label="fragment_contact"
-        tools:layout="@layout/fragment_contact" />
-
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.doggo_android.views.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.example.doggo_android.views.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
-
+        android:id="@+id/panierListFragment"
+        android:name="com.example.doggocroquette.fragment.PanierListFragment"
+        android:label="fragment_panier_list"
+        tools:layout="@layout/fragment_panier_list" >
+        <action
+            android:id="@+id/action_panierListFragment_to_croquetteListFragment"
+            app:destination="@id/croquetteListFragment" />
+    </fragment>
 </navigation>

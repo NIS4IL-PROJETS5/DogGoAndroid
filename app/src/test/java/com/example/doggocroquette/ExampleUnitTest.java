@@ -1,4 +1,4 @@
-package com.example.doggo_android;
+package com.example.doggocroquette;
 
 import org.junit.Test;
 
