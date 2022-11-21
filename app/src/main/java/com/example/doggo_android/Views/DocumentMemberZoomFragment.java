@@ -108,14 +108,29 @@ public class DocumentMemberZoomFragment extends Fragment {
                 requestPermissionLauncherCamera.launch(Manifest.permission.CAMERA);
             }
 
+        });
 
-
+        binding.buttonAddDocumentGallery.setOnClickListener(v -> {
+            intentGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                launcherGallery.launch(intentGallery);
+            } else {
+                requestPermissionLauncherGallery.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
         });
     }
 
     private final ActivityResultLauncher<String> requestPermissionLauncherCamera = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
         if (isGranted){
             launcherCamera.launch(intentCamera);
+        } else {
+            Toast.makeText(requireContext(), "Permission refusée, veuillez modifier les permissions dans vos paramètres", Toast.LENGTH_LONG).show();
+        }
+    });
+
+    private final ActivityResultLauncher<String> requestPermissionLauncherGallery = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted){
+            launcherGallery.launch(intentGallery);
         } else {
             Toast.makeText(requireContext(), "Permission refusée, veuillez modifier les permissions dans vos paramètres", Toast.LENGTH_LONG).show();
         }
