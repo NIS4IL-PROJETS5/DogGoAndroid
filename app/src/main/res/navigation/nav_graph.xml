@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_profileFragment_to_connectionFragment"
             app:destination="@id/connectionFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_documentMemberFragment"
+            app:destination="@id/documentMemberFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -79,5 +82,17 @@
             android:id="@+id/action_panierListFragment_to_croquetteListFragment"
             app:destination="@id/croquetteListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/documentMemberFragment"
+        android:name="com.example.doggo_android.Views.DocumentMemberFragment"
+        android:label="DocumentMemberFragment" >
+        <action
+            android:id="@+id/action_documentMemberFragment_to_documentMemberZoomFragment"
+            app:destination="@id/documentMemberZoomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/documentMemberZoomFragment"
+        android:name="com.example.doggo_android.Views.DocumentMemberZoomFragment"
+        android:label="DocumentMemberZoomFragment" />
 
 </navigation>

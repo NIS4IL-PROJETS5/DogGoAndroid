@@ -41,8 +41,8 @@ public class DocumentMemberZoomFragment extends Fragment {
     ActivityResultLauncher<Intent> launcherCamera;
     Intent intentCamera;
 
-    ActivityResultLauncher<Intent> launcherGallery;
-    Intent intentGallery;
+    ActivityResultLauncher<Intent> launcherExplorer;
+    Intent intentExplorer;
 
     public DocumentMemberZoomFragment() {
         // Required empty public constructor
@@ -60,10 +60,20 @@ public class DocumentMemberZoomFragment extends Fragment {
                 //TODO: envoyer le fichier au serveur
             }
         });
-        launcherGallery = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        launcherExplorer = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 viewModelDocument.getSelectedDocument().setStatus(DOC_STATUS.PENDING);
 
+                //Je n'ai absolument aucune idée de si le fichier récupéré est le bon ou non
+                //Le nom change et je ne sait pas si c'est parce qu'il est stocké dans le cache avant d'être récup
+                //ou si c'est juste un fichier vide.
+                //les metadata du fichier semblent correspondre mais je n'arrive pas a récup le fichier?
+
+                String path = result.getData().getData().getPath();
+                File fichierDoc = new File(path);
+                Log.d("DOC_SAVE", fichierDoc.getName());
+
+                //TODO: envoyer le fichier au serveur
 
             }
         });
@@ -111,11 +121,12 @@ public class DocumentMemberZoomFragment extends Fragment {
         });
 
         binding.buttonAddDocumentGallery.setOnClickListener(v -> {
-            intentGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intentExplorer = new Intent(Intent.ACTION_GET_CONTENT);
+            intentExplorer.setType("*/*");
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-                launcherGallery.launch(intentGallery);
+                launcherExplorer.launch(intentExplorer);
             } else {
-                requestPermissionLauncherGallery.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+                requestPermissionLauncherExplorer.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
         });
     }
@@ -128,9 +139,9 @@ public class DocumentMemberZoomFragment extends Fragment {
         }
     });
 
-    private final ActivityResultLauncher<String> requestPermissionLauncherGallery = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+    private final ActivityResultLauncher<String> requestPermissionLauncherExplorer = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
         if (isGranted){
-            launcherGallery.launch(intentGallery);
+            launcherExplorer.launch(intentExplorer);
         } else {
             Toast.makeText(requireContext(), "Permission refusée, veuillez modifier les permissions dans vos paramètres", Toast.LENGTH_LONG).show();
         }
