@@ -8,16 +8,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doggocroquette.databinding.PanierItemBinding;
-import com.example.doggocroquette.model.Panier;
+import com.example.doggocroquette.model.Croquette;
 
 import java.util.List;
 
 public class PanierAdapter extends RecyclerView.Adapter<PanierAdapter.PanierViewHolder>{
-    List<Panier> paniers;
+    List<Croquette> croquettes;
     Context context;
 
-    public PanierAdapter(List<Panier> paniers, Context context) {
-        this.paniers = paniers;
+    public PanierAdapter(List<Croquette> croquettes, Context context) {
+        this.croquettes = croquettes;
         this.context = context;
     }
 
@@ -30,15 +30,15 @@ public class PanierAdapter extends RecyclerView.Adapter<PanierAdapter.PanierView
 
     @Override
     public void onBindViewHolder(@NonNull PanierViewHolder holder, int position) {
-        final Panier panier = paniers.get(position);
-        holder.binding.textViewDescriptionPanier.setText(panier.getDescription());
-        holder.binding.textViewNomPanier.setText(panier.getNom());
-        holder.binding.textViewPrixPanier.setText(String.valueOf(panier.getPrix()));
+        final Croquette croquette = croquettes.get(position);
+        holder.binding.textViewDescriptionPanier.setText(croquette.getDescription());
+        holder.binding.textViewNomPanier.setText(croquette.getNom());
+        holder.binding.textViewPrixPanier.setText(String.valueOf(croquette.getPrix()));
     }
 
     @Override
     public int getItemCount() {
-        return paniers.size();
+        return croquettes.size();
     }
 
     public static class PanierViewHolder extends RecyclerView.ViewHolder{

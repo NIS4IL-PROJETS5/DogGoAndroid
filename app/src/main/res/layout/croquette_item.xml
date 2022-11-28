@@ -9,9 +9,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="8dp"
         android:background="#FFF9F9"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -82,26 +80,9 @@
                 app:layout_constraintVertical_bias="0.032" />
 
             <TextView
-                android:id="@+id/textView_add"
-                android:layout_width="30dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:text="+"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.076"
-                app:layout_constraintStart_toEndOf="@+id/textView_description_croquette"
-                app:layout_constraintTop_toBottomOf="@+id/textView_prix_croquette"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
                 android:id="@+id/textView_nb_panier_croquette"
                 android:layout_width="43dp"
                 android:layout_height="42dp"
-                android:layout_marginStart="4dp"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
                 android:text="5"
@@ -109,27 +90,9 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView_add"
-                app:layout_constraintTop_toBottomOf="@+id/textView_prix_croquette"
-                app:layout_constraintVertical_bias="0.23" />
-
-            <TextView
-                android:id="@+id/textView_remove"
-                android:layout_width="30dp"
-                android:layout_height="42dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:text="-"
-                android:textSize="35sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.728"
                 app:layout_constraintStart_toEndOf="@+id/textView_description_croquette"
                 app:layout_constraintTop_toBottomOf="@+id/textView_prix_croquette"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.23" />
 
             <TextView
                 android:id="@+id/textView"

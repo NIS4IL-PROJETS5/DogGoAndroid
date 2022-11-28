@@ -46,8 +46,9 @@ public class CroquetteListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         CroquetteSharedViewModel viewModel = new ViewModelProvider(requireActivity()).get(CroquetteSharedViewModel.class);
         List<Croquette> croquettes = viewModel.getCroquettes();
-        CroquetteAdapter adapter = new CroquetteAdapter(croquettes, getContext(), voiture -> {
-            viewModel.setSelected(voiture);
+        CroquetteAdapter adapter = new CroquetteAdapter(croquettes, getContext(), croquette -> {
+            viewModel.setSelected(croquette);
+            Navigation.findNavController(requireActivity(), R.id.container).navigate(R.id.action_croquetteListFragment_to_croquetteDetailFragment);
         });
         this.binding.imageViewCroquetteToPanier.setOnClickListener(view1 -> Navigation.findNavController(requireActivity(), R.id.container).navigate(R.id.action_croquetteListFragment_to_panierListFragment));
         this.binding.listCroquette.setAdapter(adapter);

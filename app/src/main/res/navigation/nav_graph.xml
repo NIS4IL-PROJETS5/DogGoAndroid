@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_croquetteListFragment_to_panierListFragment"
             app:destination="@id/panierListFragment" />
+        <action
+            android:id="@+id/action_croquetteListFragment_to_croquetteDetailFragment"
+            app:destination="@id/croquetteDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/panierListFragment"
@@ -21,6 +24,15 @@
         tools:layout="@layout/fragment_panier_list" >
         <action
             android:id="@+id/action_panierListFragment_to_croquetteListFragment"
+            app:destination="@id/croquetteListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/croquetteDetailFragment"
+        android:name="com.example.doggocroquette.fragment.CroquetteDetailFragment"
+        android:label="fragment_croquette_detail"
+        tools:layout="@layout/fragment_croquette_detail" >
+        <action
+            android:id="@+id/action_croquetteDetailFragment_to_croquetteListFragment"
             app:destination="@id/croquetteListFragment" />
     </fragment>
 </navigation>
