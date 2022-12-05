@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_profileFragment_to_connectionFragment"
             app:destination="@id/connectionFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_compteFragment"
+            app:destination="@id/compteFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -78,6 +81,15 @@
         <action
             android:id="@+id/action_panierListFragment_to_croquetteListFragment"
             app:destination="@id/croquetteListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/compteFragment"
+        android:name="com.example.doggo_android.Views.CompteFragment"
+        android:label="fragment_compte"
+        tools:layout="@layout/fragment_compte" >
+        <action
+            android:id="@+id/action_compteFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
 </navigation>

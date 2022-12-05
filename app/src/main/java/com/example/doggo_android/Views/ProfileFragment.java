@@ -75,12 +75,9 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.buttonProfileSignout.setOnClickListener(v -> {
-            SharedPreferences preferences = getActivity().getSharedPreferences("token", 0);
+            SharedPreferences preferences = getActivity().getSharedPreferences("DogGo", 0);
             preferences.edit().clear().apply();
-            NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
-            assert navHostFragment != null;
-            NavController controller = navHostFragment.getNavController();
-            controller.navigate(R.id.action_profileFragment_to_connectionFragment);
+            CompteFragment.checkLogin(requireContext());
         });
     }
 
@@ -102,7 +99,6 @@ public class ProfileFragment extends Fragment {
                     }
                 } else {
                     Log.d(TAG, "onResponse: Token is invalid");
-                    NavHostFragment.findNavController(ProfileFragment.this).navigate(R.id.action_profileFragment_to_connectionFragment);
                 }
             }
 

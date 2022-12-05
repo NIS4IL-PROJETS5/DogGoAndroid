@@ -19,8 +19,8 @@
 
     <item
         android:icon="@drawable/ic_baseline_person_24"
-        android:id="@+id/profileFragment"
-        android:title="Profile"/>
+        android:id="@+id/compteFragment"
+        android:title="Compte"/>
 
     <item
         android:icon="@drawable/ic_baseline_settings_24"

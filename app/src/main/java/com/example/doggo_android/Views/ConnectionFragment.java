@@ -106,9 +106,9 @@ public class ConnectionFragment extends Fragment {
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                             builder.setTitle("Login Success").setMessage("UserId: " + result.getId() + "\n" + "Role: " + result.getRole() + "\n" + "Token: " + result.getToken()).setPositiveButton("OK", (dialogInterface, i) -> {
-                                NavHostFragment.findNavController(ConnectionFragment.this).navigate(R.id.action_connectionFragment_to_profileFragment2);
                                 dialogInterface.dismiss();
                                 loginDialog.cancel();
+                                CompteFragment.checkLogin(requireContext());
                             }).show();
 
                             break;
