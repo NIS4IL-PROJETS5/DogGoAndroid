@@ -7,7 +7,7 @@ import com.example.doggo_android.Enums.DOC_STATUS;
 public class Document {
     private String name,description,rejectionReason;
     private DOC_STATUS status;
-    private Bitmap document,example;
+    private Bitmap example; //TODO: déterminer si mettre un exemple pour les documents serait pratique ou non
 
     public Document(String name, String description) {
         this.name = name;
