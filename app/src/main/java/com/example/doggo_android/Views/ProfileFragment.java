@@ -54,7 +54,10 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         binding = FragmentProfileBinding.inflate(inflater, container, false);
+        Log.d(TAG, "onViewCreated:" + "OnCreateView");
+
         return binding.getRoot();
     }
 
@@ -66,6 +69,7 @@ public class ProfileFragment extends Fragment {
         this.token = Utils.getToken(requireContext());
         this.user = connectionViewModel.getUser();
         this.checkToken();
+        Log.d(TAG, "onViewCreated:" + "OnviewCreated");
 
         binding.buttonProfileModify2.setOnClickListener(v -> {
             NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
