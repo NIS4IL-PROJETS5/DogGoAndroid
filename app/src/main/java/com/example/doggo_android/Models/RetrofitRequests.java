@@ -1,6 +1,7 @@
 package com.example.doggo_android.Models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,4 +30,7 @@ public interface RetrofitRequests {
     
     @POST("api/contacts/create")
     Call<IContact> executeContact(@Body HashMap<String, String> map, @Header("Authorization") String token);
+
+    @POST("api/actualites/create")
+    Call<IActus> executeCreateActus(@Body HashMap<String, String> map, @Header("Authorization") String token);
 }

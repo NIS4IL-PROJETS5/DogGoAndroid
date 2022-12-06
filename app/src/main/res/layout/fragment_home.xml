@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/fragment_rv_btn_cart"
+        android:id="@+id/fragment_rv_btn_add_news"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ajouter"
