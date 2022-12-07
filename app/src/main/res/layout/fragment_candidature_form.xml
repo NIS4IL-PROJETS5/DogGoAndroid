@@ -4,54 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:background="#AB673AB7"
     android:orientation="vertical"
     tools:context=".Views.CandidatureFormFragment">
 
     <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="match_parent"
-        android:layout_height="37dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0"
-        android:ems="10"
-        android:hint="nom"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/editTextFirstName"
-        android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0"
-        android:ems="10"
-        android:hint="Prenom"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="match_parent"
-        android:layout_height="37dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0"
-        android:ems="10"
-        android:hint="Mail"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <EditText
         android:id="@+id/editTextDogName"
         android:layout_width="match_parent"
         android:layout_height="37dp"
-        android:layout_marginTop="10dp"
         android:layout_weight="0"
         android:ems="10"
         android:hint="nom du chien"
@@ -97,7 +58,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <Button
             android:id="@+id/button_select_file"
