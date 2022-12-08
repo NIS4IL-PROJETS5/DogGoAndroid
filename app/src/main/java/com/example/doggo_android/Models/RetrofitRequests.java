@@ -30,7 +30,4 @@ public interface RetrofitRequests {
     
     @POST("api/contacts/create")
     Call<IContact> executeContact(@Body HashMap<String, String> map, @Header("Authorization") String token);
-
-    @POST("api/actualites/create")
-    Call<IActus> executeCreateActus(@Body HashMap<String, String> map, @Header("Authorization") String token);
 }

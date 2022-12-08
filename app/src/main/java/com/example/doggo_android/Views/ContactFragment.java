@@ -80,11 +80,7 @@ public class ContactFragment extends Fragment{
             message = binding.ptMessage.getText().toString();
             if (intReason != 0 && !message.isEmpty()) {
                 HashMap<String, String> map = new HashMap<>();
-
-                Log.d("TEST", "Raison: " + intReason);
                 map.put("conDestinataire", String.valueOf(intReason));
-
-                Log.d("TEST", "Message: " + message);
                 map.put("conDemande", message);
 
 

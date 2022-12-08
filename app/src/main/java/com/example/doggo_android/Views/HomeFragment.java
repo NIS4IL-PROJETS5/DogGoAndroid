@@ -22,7 +22,6 @@ import com.example.doggo_android.ViewModels.ActualitesViewModel;
 import com.example.doggo_android.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,14 +61,6 @@ public class HomeFragment extends Fragment {
         this.requests = Utils.getRetrofitCon(requireContext());
         this.token = Utils.getToken(requireContext());
         this.handleGetActualites();
-
-//        this.binding.fragmentRvBtnAddNews.setOnClickListener(v -> {
-//            HashMap<String, String> map = new HashMap<>();
-//            map.put("Titre", .getText().toString());
-//            map.put("password", passwordEdit.getText().toString());
-//
-//            Call<IActus> call = requests.executeCreateActus(map);
-//        });
     }
 
 
