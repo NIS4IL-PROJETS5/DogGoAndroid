@@ -57,27 +57,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
 
-        binding.imageViewDoc.setOnClickListener(v -> {
-            AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
-            ImageView mImageView = binding.imageViewDoc;
-            ViewGroup parent = (ViewGroup) mImageView.getParent();
-            if (parent != null) {
-                parent.removeView(mImageView);
-            }
 
-            mImageView.setImageResource(R.drawable.justificatif_identite);
-            mBuilder.setView(mImageView);
-            AlertDialog mDialog = mBuilder.create();
-            mDialog.show();
-            mImageView.setOnClickListener(v1 -> {
-                // Ajoutez la vue enfant à un autre groupe de vues ici
-                mDialog.dismiss();
-                //refresh la page
-                NavHostFragment.findNavController(this).navigate(R.id.profileFragment);
-            });
-            //delete white corners
-            mDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        });
 
         return binding.getRoot();
     }
@@ -85,7 +65,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.imageViewDoc.setImageResource(R.drawable.justificatif_identite);
 
         connectionViewModel = new ViewModelProvider(requireActivity()).get(ConnectionViewModel.class);
         this.requests = Utils.getRetrofitCon(requireContext());
@@ -93,7 +72,7 @@ public class ProfileFragment extends Fragment {
         this.user = connectionViewModel.getUser();
         this.checkToken();
 
-        binding.buttonProfileModify2.setOnClickListener(v -> {
+        binding.buttonProfileDemande.setOnClickListener(v -> {
             NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
             assert navHostFragment != null;
             NavController controller = navHostFragment.getNavController();
@@ -107,6 +86,13 @@ public class ProfileFragment extends Fragment {
             assert navHostFragment != null;
             NavController controller = navHostFragment.getNavController();
             controller.navigate(R.id.action_profileFragment_to_connectionFragment);
+        });
+
+        binding.buttonProfileDocument.setOnClickListener(v -> {
+            NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
+            assert navHostFragment != null;
+            NavController controller = navHostFragment.getNavController();
+            controller.navigate(R.id.action_profileFragment_to_documents);
         });
     }
 
