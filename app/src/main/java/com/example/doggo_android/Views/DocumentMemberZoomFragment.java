@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.doggo_android.R;
 import com.example.doggo_android.databinding.FragmentDocumentMemberZoomBinding;
 import com.example.doggo_android.Enums.DOC_STATUS;
 import com.example.doggo_android.Models.Document;
@@ -58,6 +60,8 @@ public class DocumentMemberZoomFragment extends Fragment {
 
                 Log.d("DOC_SAVE", "Fichier créé a : " + fichierDoc.getAbsolutePath());
                 //TODO: envoyer le fichier au serveur
+
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_documentMemberZoomFragment_to_documentMemberFragment);
             }
         });
         launcherExplorer = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {

@@ -93,6 +93,10 @@
     <fragment
         android:id="@+id/documentMemberZoomFragment"
         android:name="com.example.doggo_android.Views.DocumentMemberZoomFragment"
-        android:label="DocumentMemberZoomFragment" />
+        android:label="DocumentMemberZoomFragment" >
+        <action
+            android:id="@+id/action_documentMemberZoomFragment_to_documentMemberFragment"
+            app:destination="@id/documentMemberFragment" />
+    </fragment>
 
 </navigation>
