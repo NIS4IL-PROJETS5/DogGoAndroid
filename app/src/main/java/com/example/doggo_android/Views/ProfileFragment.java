@@ -103,7 +103,7 @@ public class ProfileFragment extends Fragment {
             NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
             assert navHostFragment != null;
             NavController controller = navHostFragment.getNavController();
-            controller.navigate(R.id.action_profileFragment_to_documents);
+            controller.navigate(R.id.action_profileFragment_to_documentMemberFragment);
         });
     }
 
