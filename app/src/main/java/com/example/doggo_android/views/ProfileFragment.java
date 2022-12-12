@@ -54,7 +54,10 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         binding = FragmentProfileBinding.inflate(inflater, container, false);
+        Log.d(TAG, "onViewCreated:" + "OnCreateView");
+
         return binding.getRoot();
     }
 
@@ -66,6 +69,7 @@ public class ProfileFragment extends Fragment {
         this.token = Utils.getToken(requireContext());
         this.user = connectionViewModel.getUser();
         this.checkToken();
+        Log.d(TAG, "onViewCreated:" + "OnviewCreated");
 
         binding.buttonProfileModify2.setOnClickListener(v -> {
             NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
@@ -75,12 +79,9 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.buttonProfileSignout.setOnClickListener(v -> {
-            SharedPreferences preferences = getActivity().getSharedPreferences("token", 0);
+            SharedPreferences preferences = getActivity().getSharedPreferences("DogGo", 0);
             preferences.edit().clear().apply();
-            NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
-            assert navHostFragment != null;
-            NavController controller = navHostFragment.getNavController();
-            controller.navigate(R.id.action_profileFragment_to_connectionFragment);
+            CompteFragment.checkLogin(requireContext());
         });
 
         binding.buttonDocumentModify.setOnClickListener(v -> {
@@ -109,7 +110,6 @@ public class ProfileFragment extends Fragment {
                     }
                 } else {
                     Log.d(TAG, "onResponse: Token is invalid");
-                    NavHostFragment.findNavController(ProfileFragment.this).navigate(R.id.action_profileFragment_to_connectionFragment);
                 }
             }
 

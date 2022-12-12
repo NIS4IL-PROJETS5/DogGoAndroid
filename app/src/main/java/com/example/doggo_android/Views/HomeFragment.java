@@ -64,6 +64,9 @@ public class HomeFragment extends Fragment {
     }
 
 
+    /**
+     * It gets the actualites from the API and displays them in a recycler view
+     */
     public void handleGetActualites() {
 
 
