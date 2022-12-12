@@ -38,8 +38,8 @@
             android:id="@+id/action_profileFragment_to_connectionFragment"
             app:destination="@id/connectionFragment" />
         <action
-            android:id="@+id/action_profileFragment_to_documentMemberFragment"
-            app:destination="@id/documentMemberFragment" />
+            android:id="@+id/action_profileFragment_to_documents"
+            app:destination="@id/documents" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -83,20 +83,12 @@
             app:destination="@id/croquetteListFragment" />
     </fragment>
     <fragment
-        android:id="@+id/documentMemberFragment"
-        android:name="com.example.doggo_android.Views.DocumentMemberFragment"
-        android:label="DocumentMemberFragment" >
+        android:id="@+id/documents"
+        android:name="com.example.doggo_android.Views.Documents"
+        android:label="Documents" >
         <action
-            android:id="@+id/action_documentMemberFragment_to_documentMemberZoomFragment"
-            app:destination="@id/documentMemberZoomFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/documentMemberZoomFragment"
-        android:name="com.example.doggo_android.Views.DocumentMemberZoomFragment"
-        android:label="DocumentMemberZoomFragment" >
-        <action
-            android:id="@+id/action_documentMemberZoomFragment_to_documentMemberFragment"
-            app:destination="@id/documentMemberFragment" />
+            android:id="@+id/action_documents_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
 </navigation>

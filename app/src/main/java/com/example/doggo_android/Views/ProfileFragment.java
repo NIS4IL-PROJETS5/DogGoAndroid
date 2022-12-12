@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.doggo_android.Models.RetrofitRequests;
 import com.example.doggo_android.Models.IUser;
@@ -56,7 +57,8 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
-        Log.d(TAG, "onViewCreated:" + "OnCreateView");
+
+
 
         return binding.getRoot();
     }
@@ -64,6 +66,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         connectionViewModel = new ViewModelProvider(requireActivity()).get(ConnectionViewModel.class);
         this.requests = Utils.getRetrofitCon(requireContext());
         this.token = Utils.getToken(requireContext());
@@ -71,7 +74,7 @@ public class ProfileFragment extends Fragment {
         this.checkToken();
         Log.d(TAG, "onViewCreated:" + "OnviewCreated");
 
-        binding.buttonProfileModify2.setOnClickListener(v -> {
+        binding.buttonProfileDemande.setOnClickListener(v -> {
             NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
             assert navHostFragment != null;
             NavController controller = navHostFragment.getNavController();
@@ -84,11 +87,23 @@ public class ProfileFragment extends Fragment {
             CompteFragment.checkLogin(requireContext());
         });
 
+        /*
+
         binding.buttonDocumentModify.setOnClickListener(v -> {
             NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
             assert navHostFragment != null;
             NavController controller = navHostFragment.getNavController();
             controller.navigate(R.id.action_profileFragment_to_documentMemberFragment);
+        });
+
+        */
+
+
+        binding.buttonProfileDocument.setOnClickListener(v -> {
+            NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
+            assert navHostFragment != null;
+            NavController controller = navHostFragment.getNavController();
+            controller.navigate(R.id.action_profileFragment_to_documents);
         });
     }
 

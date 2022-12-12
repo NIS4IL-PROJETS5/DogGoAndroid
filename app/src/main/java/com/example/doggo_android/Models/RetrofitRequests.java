@@ -30,4 +30,6 @@ public interface RetrofitRequests {
     
     @POST("api/contacts/create")
     Call<IContact> executeContact(@Body HashMap<String, String> map, @Header("Authorization") String token);
+    @POST("api/dogs/create")
+    Call<IDog> executeCreateDog(@Body HashMap<String, String> map,@Header("Authorization") String token);
 }
