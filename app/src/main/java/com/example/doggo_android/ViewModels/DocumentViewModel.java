@@ -30,7 +30,7 @@ public class DocumentViewModel extends ViewModel {
     }
 
     public List<Document> getPendingDocuments(){
-        List<Document> documents = new ArrayList<Document>();
+        List<Document> documents = new ArrayList<>();
         for (Document document : this.documents){
             if (document.getStatus() == DOC_STATUS.NOT_SENT || document.getStatus() == DOC_STATUS.REJECTED){
                 documents.add(document);
@@ -44,10 +44,10 @@ public class DocumentViewModel extends ViewModel {
     }
 
     public void initDocuments(){
-        documents.add(new Document("Document 1","Description 1"));
-        documents.add(new Document("Document 2","Description 2", DOC_STATUS.PENDING));
-        documents.add(new Document("Document 3","Description 3",DOC_STATUS.ACCEPTED));
-        Document falseDoc = new Document("Document 4","Description 4",DOC_STATUS.REJECTED);
+        documents.add(new Document("Certificat de dressage","Certificat de dressage de votre chien"));
+        documents.add(new Document("Carnet de vaccination","Carnet de vaccination de votre chien", DOC_STATUS.PENDING));
+        documents.add(new Document("Attestation de responsabilité civile","Votre attestation de responsabilité civile",DOC_STATUS.ACCEPTED));
+        Document falseDoc = new Document("Carte d'identification","Votre carte d'identification a la charte canine",DOC_STATUS.REJECTED);
         falseDoc.setRejectionReason("Document incomplet");
         documents.add(falseDoc);
     }

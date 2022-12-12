@@ -20,7 +20,7 @@
         android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="683dp"
         android:layout_gravity="center"
         android:layout_weight="0"

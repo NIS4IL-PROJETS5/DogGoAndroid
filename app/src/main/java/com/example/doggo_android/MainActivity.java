@@ -23,5 +23,25 @@ public class MainActivity extends AppCompatActivity {
         NavController controller = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(binding.bottomNavigationView,controller);
 
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.homeFragment:
+                    controller.navigate(R.id.homeFragment);
+                    break;
+                case R.id.membersFragment:
+                    controller.navigate(R.id.membersFragment);
+                    break;
+                case R.id.profileFragment:
+                    controller.navigate(R.id.profileFragment);
+                    break;
+                case R.id.contactFragment:
+                    controller.navigate(R.id.contactFragment);
+                    break;
+                case R.id.settingsFragment:
+                    controller.navigate(R.id.settingsFragment);
+                    break;
+            }
+            return true;
+        });
     }
 }

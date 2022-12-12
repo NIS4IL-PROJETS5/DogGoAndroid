@@ -100,6 +100,9 @@
         <action
             android:id="@+id/action_documentMemberFragment_to_documentMemberZoomFragment"
             app:destination="@id/documentMemberZoomFragment" />
+        <action
+            android:id="@+id/action_documentMemberFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/documentMemberZoomFragment"
@@ -108,6 +111,9 @@
         <action
             android:id="@+id/action_documentMemberZoomFragment_to_documentMemberFragment"
             app:destination="@id/documentMemberFragment" />
+        <action
+            android:id="@+id/action_documentMemberZoomFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
 </navigation>
