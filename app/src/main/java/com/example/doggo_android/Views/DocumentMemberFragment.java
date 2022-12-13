@@ -21,8 +21,8 @@ import com.example.doggo_android.ViewModels.DocumentViewModel;
 
 public class DocumentMemberFragment extends Fragment {
 
-
-    DocumentMemberAdapter documentMemberAdapter;
+    DocumentMemberAdapter documentMemberAdapterFull;
+    DocumentMemberAdapter documentMemberAdapterPartial;
     DocumentViewModel viewModelDocument;
 
     FragmentDocumentMemberBinding binding;
@@ -49,12 +49,27 @@ public class DocumentMemberFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModelDocument = new ViewModelProvider(requireActivity()).get(DocumentViewModel.class);
-        documentMemberAdapter = new DocumentMemberAdapter(viewModelDocument.getDocuments(), getContext(), document -> {
+        documentMemberAdapterFull = new DocumentMemberAdapter(viewModelDocument.getDocuments(), getContext(), document -> {
             viewModelDocument.setSelectedDocument(document);
-            Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_candidatureFormFragment);
+            Navigation.findNavController(view).navigate(R.id.action_documentMemberFragment_to_documentMemberZoomFragment);
         });
+
+        documentMemberAdapterPartial = new DocumentMemberAdapter(viewModelDocument.getPendingDocuments(), getContext(), document -> {
+            viewModelDocument.setSelectedDocument(document);
+            Navigation.findNavController(view).navigate(R.id.action_documentMemberFragment_to_documentMemberZoomFragment);
+        });
+
+
         binding.DocumentMemberRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.DocumentMemberRecyclerView.setAdapter(documentMemberAdapter);
+        binding.DocumentMemberRecyclerView.setAdapter(documentMemberAdapterFull);
         binding.DocumentMemberRecyclerView.setHasFixedSize(true);
+
+        binding.switch1.setOnClickListener(view1 -> {
+            if (binding.switch1.isChecked()) {
+                binding.DocumentMemberRecyclerView.setAdapter(documentMemberAdapterPartial);
+            } else {
+                binding.DocumentMemberRecyclerView.setAdapter(documentMemberAdapterFull);
+            }
+        });
     }
 }

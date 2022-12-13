@@ -5,7 +5,52 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.DocumentMemberZoomFragment">
+    tools:context=".Views.DocumentMemberZoomFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MES DOCUMENTS"
+            android:textAlignment="center"
+            android:textColor="#EF6C00"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="10sp"
+            android:contentDescription="Header logo"
+            android:src="@drawable/logo_joyeux_cabots_jpeg_removebg_preview"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Space
+            android:id="@+id/space"
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textViewDocumentDescription"
@@ -56,17 +101,34 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonAddDocumentCamera"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Camera" />
+                android:text="Camera"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_weight="0"
+                android:background="@drawable/round_button"
+                android:fontFamily="sans-serif"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonAddDocumentGallery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Gallerie" />
+                android:text="Gallerie"
+                android:layout_marginTop="15dp"
+                android:layout_weight="0"
+                android:background="@drawable/round_button"
+                android:fontFamily="sans-serif"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <TextView

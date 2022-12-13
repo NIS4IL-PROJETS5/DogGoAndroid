@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -15,9 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.example.doggo_android.Models.RetrofitRequests;
 import com.example.doggo_android.Models.IUser;
@@ -26,13 +22,9 @@ import com.example.doggo_android.Utils;
 import com.example.doggo_android.ViewModels.ConnectionViewModel;
 import com.example.doggo_android.databinding.FragmentProfileBinding;
 
-import java.util.HashMap;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ProfileFragment extends Fragment {
@@ -90,7 +82,7 @@ public class ProfileFragment extends Fragment {
             NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
             assert navHostFragment != null;
             NavController controller = navHostFragment.getNavController();
-            controller.navigate(R.id.action_profileFragment_to_documents);
+            controller.navigate(R.id.action_compteFragment_to_documentMemberFragment);
         });
     }
 

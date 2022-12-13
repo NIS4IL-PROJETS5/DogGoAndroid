@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.doggo_android.R;
 import com.example.doggo_android.databinding.FragmentDocumentMemberZoomBinding;
 import com.example.doggo_android.Enums.DOC_STATUS;
 import com.example.doggo_android.Models.Document;
@@ -41,8 +43,8 @@ public class DocumentMemberZoomFragment extends Fragment {
     ActivityResultLauncher<Intent> launcherCamera;
     Intent intentCamera;
 
-    ActivityResultLauncher<Intent> launcherGallery;
-    Intent intentGallery;
+    ActivityResultLauncher<Intent> launcherExplorer;
+    Intent intentExplorer;
 
     public DocumentMemberZoomFragment() {
         // Required empty public constructor
@@ -58,13 +60,26 @@ public class DocumentMemberZoomFragment extends Fragment {
 
                 Log.d("DOC_SAVE", "Fichier créé a : " + fichierDoc.getAbsolutePath());
                 //TODO: envoyer le fichier au serveur
+
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_documentMemberZoomFragment_to_documentMemberFragment);
             }
         });
-        launcherGallery = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        launcherExplorer = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 viewModelDocument.getSelectedDocument().setStatus(DOC_STATUS.PENDING);
 
+                //Je n'ai absolument aucune idée de si le fichier récupéré est le bon ou non
+                //Le nom change et je ne sait pas si c'est parce qu'il est stocké dans le cache avant d'être récup
+                //ou si c'est juste un fichier vide.
+                //les metadata du fichier semblent correspondre mais je n'arrive pas a récup le fichier?
 
+                String path = result.getData().getData().getPath();
+                File fichierDoc = new File(path);
+                Log.d("DOC_SAVE", fichierDoc.getName());
+
+                //TODO: envoyer le fichier au serveur
+
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_documentMemberZoomFragment_to_documentMemberFragment);
             }
         });
     }
@@ -108,14 +123,30 @@ public class DocumentMemberZoomFragment extends Fragment {
                 requestPermissionLauncherCamera.launch(Manifest.permission.CAMERA);
             }
 
+        });
 
-
+        binding.buttonAddDocumentGallery.setOnClickListener(v -> {
+            intentExplorer = new Intent(Intent.ACTION_GET_CONTENT);
+            intentExplorer.setType("*/*");
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                launcherExplorer.launch(intentExplorer);
+            } else {
+                requestPermissionLauncherExplorer.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
         });
     }
 
     private final ActivityResultLauncher<String> requestPermissionLauncherCamera = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
         if (isGranted){
             launcherCamera.launch(intentCamera);
+        } else {
+            Toast.makeText(requireContext(), "Permission refusée, veuillez modifier les permissions dans vos paramètres", Toast.LENGTH_LONG).show();
+        }
+    });
+
+    private final ActivityResultLauncher<String> requestPermissionLauncherExplorer = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted){
+            launcherExplorer.launch(intentExplorer);
         } else {
             Toast.makeText(requireContext(), "Permission refusée, veuillez modifier les permissions dans vos paramètres", Toast.LENGTH_LONG).show();
         }
