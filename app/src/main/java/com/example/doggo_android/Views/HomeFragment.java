@@ -22,6 +22,7 @@ import com.example.doggo_android.ViewModels.ActualitesViewModel;
 import com.example.doggo_android.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,8 +70,9 @@ public class HomeFragment extends Fragment {
      */
     public void handleGetActualites() {
 
-
         Call<ArrayList<IActus>> call = requests.executeGetActus("Bearer " + token, String.valueOf(page));
+
+        List<IActus> itemsToRemove = new ArrayList<>();
 
         call.enqueue(new Callback<ArrayList<IActus>>() {
             @Override
@@ -78,9 +80,17 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful()) {
 
                     actus = response.body();
+
+
                     for (IActus actu : actus) {
-                        actu.setDescription(Utils.truncate(actu.getDescription(), 100));
+                        if (actu.getType() == 4) {
+                            itemsToRemove.add(actu);
+                        } else {
+                            actu.setDescription(Utils.truncate(actu.getDescription(), 100));
+                        }
                     }
+                    actus.removeAll(itemsToRemove);
+
 
                     if(viewModel.getActus() == null) {
                         viewModel.setActus(actus);

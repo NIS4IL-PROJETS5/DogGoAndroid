@@ -59,4 +59,9 @@ public class Utils {
         SharedPreferences preferences = ctx.getSharedPreferences("DogGo", 0);
         return preferences.getString("token", "");
     }
+
+    public static String getRole(Context ctx) {
+        SharedPreferences preferences = ctx.getSharedPreferences("DogGo", 0);
+        return preferences.getString("role", "");
+    }
 }
