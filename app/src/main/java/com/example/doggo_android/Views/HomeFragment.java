@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,33 +61,6 @@ public class HomeFragment extends Fragment {
         return binding.getRoot();
     }
 
-//    @Override
-//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//
-//        this.requests = Utils.getRetrofitCon(requireContext());
-//        this.token = Utils.getToken(requireContext());
-//        this.handleGetActualites();
-//
-//
-//        binding.fragmentActualitesFilterLogo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String[] options = {"Alerte", "Simple", "Future", "Agility", "Tout"};
-//
-//                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-//                builder.setTitle("Afficher les actualités de type :")
-//                        .setItems(options, new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                // Triez la liste d'actualités en fonction de l'option sélectionnée
-//                            }
-//                        });
-//                AlertDialog dialog = builder.create();
-//                dialog.show();
-//            }
-//        });
-//    }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -105,10 +79,14 @@ public class HomeFragment extends Fragment {
                         // Récupérez la sélection de l'utilisateur
                         String selectedOption = options[which];
 
-                        // Triez la liste d'actualités en fonction de l'option sélectionnée
+
+                        // Filtrez les actualités en fonction de la sélection de l'utilisateur
                         
 
+
                         Log.d("TAG", "onClick: " + selectedOption);
+
+
                     });
             builder.create().show();
         });

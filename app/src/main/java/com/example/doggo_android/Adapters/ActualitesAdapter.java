@@ -45,6 +45,7 @@ public class ActualitesAdapter extends RecyclerView.Adapter<ActualitesAdapter.Ac
         return actualites.size();
     }
 
+
     public class ActualitesViewHolder extends RecyclerView.ViewHolder {
 
         RvActualitesItemBinding binding;
