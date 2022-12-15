@@ -7,31 +7,122 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.doggo_android.views.HomeFragment"
+        android:name="com.example.doggo_android.Views.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
     android:id="@+id/membersFragment"
-    android:name="com.example.doggo_android.views.MembersFragment"
+    android:name="com.example.doggo_android.Views.MembersFragment"
     android:label="fragment_members"
-    tools:layout="@layout/fragment_members" />
+    tools:layout="@layout/fragment_members" >
+        <action
+            android:id="@+id/action_membersFragment_to_croquetteListFragment"
+            app:destination="@id/croquetteListFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/contactFragment"
-        android:name="com.example.doggo_android.views.ContactFragment"
+        android:name="com.example.doggo_android.Views.ContactFragment"
         android:label="fragment_contact"
         tools:layout="@layout/fragment_contact" />
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.doggo_android.views.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        android:name="com.example.doggo_android.Views.ProfileFragment"
+        android:label="fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_candidatureFormFragment"
+            app:destination="@id/candidatureFormFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_connectionFragment"
+            app:destination="@id/connectionFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_compteFragment"
+            app:destination="@id/compteFragment" />
+        <action    
+            android:id="@+id/action_profileFragment_to_documents"
+            app:destination="@id/documents" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.doggo_android.views.SettingsFragment"
+        android:name="com.example.doggo_android.Views.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/candidatureFormFragment"
+        android:name="com.example.doggo_android.Views.CandidatureFormFragment"
+        android:label="fragment_candidature_form"
+        tools:layout="@layout/fragment_candidature_form" >
+        <action
+            android:id="@+id/action_candidatureFormFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/connectionFragment"
+        android:name="com.example.doggo_android.Views.ConnectionFragment"
+        android:label="fragment_connection"
+        tools:layout="@layout/fragment_connection" >
+        <action
+            android:id="@+id/action_connectionFragment_to_profileFragment2"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/croquetteListFragment"
+        android:name="com.example.doggo_android.Views.CroquetteListFragment"
+        android:label="fragment_croquette_list"
+        tools:layout="@layout/fragment_croquette_list" >
+        <action
+            android:id="@+id/action_croquetteListFragment_to_panierListFragment"
+            app:destination="@id/panierListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/panierListFragment"
+        android:name="com.example.doggo_android.Views.PanierListFragment"
+        android:label="fragment_panier_list"
+        tools:layout="@layout/fragment_panier_list" >
+        <action
+            android:id="@+id/action_panierListFragment_to_croquetteListFragment"
+            app:destination="@id/croquetteListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/compteFragment"
+        android:name="com.example.doggo_android.Views.CompteFragment"
+        android:label="fragment_compte"
+        tools:layout="@layout/fragment_compte" >
+        <action
+            android:id="@+id/action_compteFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_compteFragment_to_documentMemberFragment"
+            app:destination="@id/documentMemberFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/documents"
+        android:name="com.example.doggo_android.Views.Documents"
+        android:label="Documents" >
+        <action
+            android:id="@+id/action_documents_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/documentMemberFragment"
+        android:name="com.example.doggo_android.Views.DocumentMemberFragment"
+        android:label="fragment_document_member"
+        tools:layout="@layout/fragment_document_member" >
+        <action
+            android:id="@+id/action_documentMemberFragment_to_documentMemberZoomFragment"
+            app:destination="@id/documentMemberZoomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/documentMemberZoomFragment"
+        android:name="com.example.doggo_android.Views.DocumentMemberZoomFragment"
+        android:label="fragment_document_member_zoom"
+        tools:layout="@layout/fragment_document_member_zoom" >
+        <action
+            android:id="@+id/action_documentMemberZoomFragment_to_documentMemberFragment"
+            app:destination="@id/documentMemberFragment" />
+    </fragment>
 
 </navigation>
