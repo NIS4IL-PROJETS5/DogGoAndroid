@@ -1,5 +1,8 @@
 package com.example.doggo_android.Views;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +25,8 @@ import com.example.doggo_android.ViewModels.ActualitesViewModel;
 import com.example.doggo_android.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -55,6 +60,34 @@ public class HomeFragment extends Fragment {
         return binding.getRoot();
     }
 
+//    @Override
+//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//
+//        this.requests = Utils.getRetrofitCon(requireContext());
+//        this.token = Utils.getToken(requireContext());
+//        this.handleGetActualites();
+//
+//
+//        binding.fragmentActualitesFilterLogo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String[] options = {"Alerte", "Simple", "Future", "Agility", "Tout"};
+//
+//                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+//                builder.setTitle("Afficher les actualités de type :")
+//                        .setItems(options, new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                // Triez la liste d'actualités en fonction de l'option sélectionnée
+//                            }
+//                        });
+//                AlertDialog dialog = builder.create();
+//                dialog.show();
+//            }
+//        });
+//    }
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -62,7 +95,25 @@ public class HomeFragment extends Fragment {
         this.requests = Utils.getRetrofitCon(requireContext());
         this.token = Utils.getToken(requireContext());
         this.handleGetActualites();
+
+        binding.fragmentActualitesFilterLogo.setOnClickListener(view1 -> {
+            String[] options = {"Alerte", "Simple", "Future", "Agility", "Tout"};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            builder.setTitle("Afficher les actualités de type :")
+                    .setItems(options, (dialog, which) -> {
+                        // Récupérez la sélection de l'utilisateur
+                        String selectedOption = options[which];
+
+                        // Triez la liste d'actualités en fonction de l'option sélectionnée
+                        
+
+                        Log.d("TAG", "onClick: " + selectedOption);
+                    });
+            builder.create().show();
+        });
     }
+
 
 
     /**
@@ -96,6 +147,11 @@ public class HomeFragment extends Fragment {
                         viewModel.setActus(actus);
                     } else {
                         viewModel.addActus(actus);
+                    }
+
+                    // Triez la liste d'actualités en fonction du type
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Collections.sort(actus, Comparator.comparingInt(IActus::getType));
                     }
 
                     adapter = new ActualitesAdapter(requireContext(), viewModel.getActus().getValue());
