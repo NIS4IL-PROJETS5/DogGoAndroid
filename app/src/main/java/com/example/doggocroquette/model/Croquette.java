@@ -5,13 +5,16 @@ public class Croquette {
     private String description;
     private int prix;
     private int nbPanier;
+    private int stock;
 
-    public Croquette(String nom, String description, int prix, int nbPanier) {
+    public Croquette(String nom, String description, int prix, int nbPanier, int stock) {
         this.nom = nom;
         this.description = description;
         this.prix = prix;
         this.nbPanier = nbPanier;
+        this.stock = stock;
     }
+
 
     public String getNom() {
         return nom;
@@ -43,5 +46,13 @@ public class Croquette {
 
     public void setNbPanier(int nbPanier) {
         this.nbPanier = nbPanier;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }

@@ -6,10 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.doggocroquette.R;
 import com.example.doggocroquette.adapter.PanierAdapter;
@@ -53,19 +55,26 @@ public class CroquetteDetailFragment extends Fragment {
         binding.buttonAjouterCroquetteDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(item.getStock() == 1 ){
+                    binding.buttonAjouterCroquetteDetail.setEnabled(false);
+                    binding.buttonAjouterCroquetteDetail.setText("Stock épuisé");
+                }
                 List<Croquette> croquetteList = viewModelPanier.getCroquettePanier();
                 PanierAdapter adapter = new PanierAdapter(croquetteList, getContext());
                 String nom = item.getNom();
                 String description = item.getDescription();
                 int prix = item.getPrix();
-                int nbPanier = item.getNbPanier();
-                nbPanier +=1;
-                Croquette croquette = new Croquette(nom,description,prix,nbPanier);
+                int nbPanier = item.getNbPanier()+1;
+                item.setNbPanier(nbPanier);
+                int stock = item.getStock()-1;
+                item.setStock(stock);
+                Croquette croquette = new Croquette(nom,description,prix,nbPanier, stock);
                 int pos = viewModelPanier.addCroquetteToPanier(croquette);
                 adapter.notifyItemInserted(pos);
                 adapter.notifyItemInserted(pos);
             }
         });
+        binding.buttonRetourCroquetteDetail.setOnClickListener(view1 -> Navigation.findNavController(requireActivity(), R.id.container).navigate(R.id.action_croquetteDetailFragment_to_croquetteListFragment));
         });
     }
 }

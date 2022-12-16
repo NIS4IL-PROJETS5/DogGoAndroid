@@ -11,6 +11,8 @@ import java.util.List;
 
 public class CroquetteSharedViewModel extends ViewModel {
 
+
+
     private List<Croquette> croquettes = new ArrayList<Croquette>();
 
     private MutableLiveData<Croquette> selected = new MutableLiveData<>();
@@ -29,7 +31,10 @@ public class CroquetteSharedViewModel extends ViewModel {
     }
 
     private void initVets(){
-        croquettes.add(new Croquette("Iams Vitality - poulet","pour Chiens Seniors Grande Race. Aliment 100 % complet et équilibré. Sans épaississant. Sans OGM . Sans colorants . Sans blé",40,0));
-        croquettes.add(new Croquette("Iams Vitality - allégées", "pour chiens Adultes Petite et Moyenne Race. Aliment 100 % complet et équilibré. Sans épaississant. Sans OGM . Sans colorants . Sans blé",40,0));
+        croquettes.add(new Croquette("Iams Vitality - poulet","pour Chiens Seniors Grande Race. Aliment 100 % complet et équilibré. Sans épaississant. Sans OGM . Sans colorants . Sans blé",40,0, 5));
+        croquettes.add(new Croquette("Iams Vitality - allégées", "pour chiens Adultes Petite et Moyenne Race. Aliment 100 % complet et équilibré. Sans épaississant. Sans OGM . Sans colorants . Sans blé",40,0,6));
     }
+
+    private List<Croquette> croquettespanier = new ArrayList<Croquette>();
+
 }

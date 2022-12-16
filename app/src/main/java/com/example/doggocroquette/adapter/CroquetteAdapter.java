@@ -1,14 +1,18 @@
 package com.example.doggocroquette.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.doggocroquette.R;
 import com.example.doggocroquette.databinding.CroquetteItemBinding;
 import com.example.doggocroquette.model.Croquette;
+import com.example.doggocroquette.viewModel.PanierSharedViewModel;
 
 import java.util.List;
 
@@ -34,11 +38,28 @@ public class CroquetteAdapter extends RecyclerView.Adapter<CroquetteAdapter.Croq
     @Override
     public void onBindViewHolder(@NonNull CroquetteViewHolder holder, int position) {
         final Croquette croquette = croquettes.get(position);
-        holder.binding.getRoot().setOnClickListener(view -> listener.onCroquetteClicked(croquette));
+        holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SuspiciousIndentation")
+            @Override
+            public void onClick(View view) {
+                if(croquette.getStock()>0)
+                listener.onCroquetteClicked(croquette);
+            }
+        });
         holder.binding.textViewDescriptionCroquette.setText(croquette.getDescription());
         holder.binding.textViewNomCroquette.setText(croquette.getNom());
         holder.binding.textViewPrixCroquette.setText(String.valueOf(croquette.getPrix()));
         holder.binding.textViewNbPanierCroquette.setText(String.valueOf(croquette.getNbPanier()));
+        if (croquette.getStock() == 0) {
+            holder.binding.imageView2.setImageResource(R.drawable.epuise);
+            holder.binding.buttonAjoutPanier.setEnabled(false);
+        } else {
+            holder.binding.imageView2.setVisibility(View.INVISIBLE);
+        }
+        if(croquette.getNbPanier() == 0){
+            holder.binding.buttonEnleverPanier.setEnabled(false);
+        }
+
     }
 
     @Override

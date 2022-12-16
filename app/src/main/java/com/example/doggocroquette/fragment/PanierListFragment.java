@@ -48,5 +48,6 @@ public class PanierListFragment extends Fragment {
         this.binding.listPanier.setAdapter(adapter);
         this.binding.listPanier.setLayoutManager(new LinearLayoutManager(getContext()));
         this.binding.listPanier.setHasFixedSize(true);
+        this.binding.textViewNombreTotal.setText(String.valueOf(viewModel.getTotal()));
     }
 }
