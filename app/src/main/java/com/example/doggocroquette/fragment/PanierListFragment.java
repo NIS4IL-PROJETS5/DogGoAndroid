@@ -17,6 +17,7 @@ import com.example.doggocroquette.databinding.FragmentPanierListBinding;
 import com.example.doggocroquette.model.Croquette;
 import com.example.doggocroquette.viewModel.PanierSharedViewModel;
 
+
 import java.util.List;
 
 public class PanierListFragment extends Fragment {
@@ -49,5 +50,8 @@ public class PanierListFragment extends Fragment {
         this.binding.listPanier.setLayoutManager(new LinearLayoutManager(getContext()));
         this.binding.listPanier.setHasFixedSize(true);
         this.binding.textViewNombreTotal.setText(String.valueOf(viewModel.getTotal()));
+        this.binding.button.setOnClickListener(view1 -> {
+            
+        });
     }
 }

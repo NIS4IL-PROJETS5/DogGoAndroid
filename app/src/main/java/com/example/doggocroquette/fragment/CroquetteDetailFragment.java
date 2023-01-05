@@ -52,26 +52,44 @@ public class CroquetteDetailFragment extends Fragment {
         viewModel.getSelected().observe(getViewLifecycleOwner(), item -> {
         binding.textViewNomCroquetteDetail.setText(item.getNom());
         binding.textViewDescriptionCroquetteDetail.setText(item.getDescription());
-        binding.buttonAjouterCroquetteDetail.setOnClickListener(new View.OnClickListener() {
+        binding.buttonAjouterCroquetteDetail.setOnClickListener(view12 -> {
+            if(item.getStock() == 1 ){
+                binding.buttonAjouterCroquetteDetail.setEnabled(false);
+                binding.buttonAjouterCroquetteDetail.setText("Stock épuisé");
+            }
+            List<Croquette> croquetteList = viewModelPanier.getCroquettePanier();
+            PanierAdapter adapter = new PanierAdapter(croquetteList, getContext());
+            String nom = item.getNom();
+            String description = item.getDescription();
+            int prix = item.getPrix();
+            int nbPanier = item.getNbPanier()+1;
+            item.setNbPanier(nbPanier);
+            int stock = item.getStock()-1;
+            item.setStock(stock);
+            Croquette croquette = new Croquette(nom,description,prix,nbPanier, stock);
+            int pos = viewModelPanier.addCroquetteToPanier(croquette);
+            adapter.notifyItemInserted(pos);
+            adapter.notifyItemInserted(pos);
+        });
+        binding.buttonEnleverCroquette.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(item.getStock() == 1 ){
-                    binding.buttonAjouterCroquetteDetail.setEnabled(false);
-                    binding.buttonAjouterCroquetteDetail.setText("Stock épuisé");
+                if(item.getStock()>0){
+                    binding.buttonEnleverCroquette.setEnabled(false);
                 }
                 List<Croquette> croquetteList = viewModelPanier.getCroquettePanier();
                 PanierAdapter adapter = new PanierAdapter(croquetteList, getContext());
                 String nom = item.getNom();
                 String description = item.getDescription();
                 int prix = item.getPrix();
-                int nbPanier = item.getNbPanier()+1;
+                int nbPanier = item.getNbPanier()-1;
                 item.setNbPanier(nbPanier);
-                int stock = item.getStock()-1;
+                int stock = item.getStock()+1;
                 item.setStock(stock);
                 Croquette croquette = new Croquette(nom,description,prix,nbPanier, stock);
-                int pos = viewModelPanier.addCroquetteToPanier(croquette);
-                adapter.notifyItemInserted(pos);
-                adapter.notifyItemInserted(pos);
+                int pos = viewModelPanier.removeCroquetteFromPanier(croquette);
+                adapter.notifyItemRemoved(pos);
+                adapter.notifyItemRemoved(pos);
             }
         });
         binding.buttonRetourCroquetteDetail.setOnClickListener(view1 -> Navigation.findNavController(requireActivity(), R.id.container).navigate(R.id.action_croquetteDetailFragment_to_croquetteListFragment));

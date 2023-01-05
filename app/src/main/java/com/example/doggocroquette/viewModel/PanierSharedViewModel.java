@@ -28,22 +28,21 @@ public class PanierSharedViewModel extends ViewModel {
             croquette.setNbPanier(1);
             total = total+ croquette.getPrix();
         }else {
-            for (int i = 0; i < croquettespanier.size(); i++) {
-                if (croquettespanier.get(i).getNom().equals(croquette.getNom())) {
-                    croquettespanier.get(i).setNbPanier(1);
-                    total += croquette.getPrix();
-                } else {
-                    croquettespanier.add(croquette);
-                    croquette.setNbPanier(1);
+            for (Croquette c : croquettespanier) {
+                if (c.getNom().equals(croquette.getNom()) && c.getDescription().equals(croquette.getDescription())) {
+                    c.setNbPanier(c.getNbPanier() + 1);
                     total = total + croquette.getPrix();
+                    return 0;
                 }
             }
+            croquettespanier.add(croquette);
+            total = total + croquette.getPrix();
         }
         return croquettespanier.size()-1;
     }
 
 
-    public void removeCroquetteFromPanier(Croquette croquette) {
+    public int removeCroquetteFromPanier(Croquette croquette) {
         int index = croquettespanier.indexOf(croquette);
         if (index != -1) {
             Croquette croquetteInPanier = croquettespanier.get(index);
@@ -57,6 +56,7 @@ public class PanierSharedViewModel extends ViewModel {
             }
             total = total - croquette.getPrix();
         }
+        return croquettespanier.size()-1;
     }
     public  List<Croquette> getCroquettePanier(){
         return croquettespanier;

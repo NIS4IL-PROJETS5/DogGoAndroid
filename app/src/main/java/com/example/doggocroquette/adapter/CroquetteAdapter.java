@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doggocroquette.R;
@@ -50,6 +52,33 @@ public class CroquetteAdapter extends RecyclerView.Adapter<CroquetteAdapter.Croq
         holder.binding.textViewNomCroquette.setText(croquette.getNom());
         holder.binding.textViewPrixCroquette.setText(String.valueOf(croquette.getPrix()));
         holder.binding.textViewNbPanierCroquette.setText(String.valueOf(croquette.getNbPanier()));
+        holder.binding.buttonAjoutPanier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PanierSharedViewModel panierSharedViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(PanierSharedViewModel.class);
+                if(croquette.getStock()>0){
+                    holder.binding.buttonEnleverPanier.setEnabled(true);
+                    croquette.setNbPanier(croquette.getNbPanier()+1);
+                    croquette.setStock(croquette.getStock()-1);
+                    holder.binding.textViewNbPanierCroquette.setText(String.valueOf(croquette.getNbPanier()));
+                    panierSharedViewModel.addCroquetteToPanier(croquette);
+                }
+
+            }
+        });
+        holder.binding.buttonEnleverPanier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PanierSharedViewModel panierSharedViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(PanierSharedViewModel.class);
+                if(croquette.getNbPanier()>0){
+                    holder.binding.buttonAjoutPanier.setEnabled(true);
+                    croquette.setNbPanier(croquette.getNbPanier()-1);
+                    croquette.setStock(croquette.getStock()+1);
+                    holder.binding.textViewNbPanierCroquette.setText(String.valueOf(croquette.getNbPanier()));
+                    panierSharedViewModel.removeCroquetteFromPanier(croquette);
+                }
+            }
+        });
         if (croquette.getStock() == 0) {
             holder.binding.imageView2.setImageResource(R.drawable.epuise);
             holder.binding.buttonAjoutPanier.setEnabled(false);
