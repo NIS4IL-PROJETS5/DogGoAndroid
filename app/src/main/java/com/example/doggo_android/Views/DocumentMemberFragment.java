@@ -51,7 +51,7 @@ public class DocumentMemberFragment extends Fragment {
         viewModelDocument = new ViewModelProvider(requireActivity()).get(DocumentViewModel.class);
         documentMemberAdapter = new DocumentMemberAdapter(viewModelDocument.getDocuments(), getContext(), document -> {
             viewModelDocument.setSelectedDocument(document);
-            Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_candidatureFormFragment);
+            Navigation.findNavController(view).navigate(R.id.action_documentMemberFragment_to_documentMemberZoomFragment);
         });
         binding.DocumentMemberRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.DocumentMemberRecyclerView.setAdapter(documentMemberAdapter);

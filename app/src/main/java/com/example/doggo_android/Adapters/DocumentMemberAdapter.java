@@ -52,7 +52,6 @@ public class DocumentMemberAdapter extends RecyclerView.Adapter<DocumentMemberAd
             name = binding.ItemRecyclerViewDocumentName;
             statusDescription = binding.ItemRecyclerViewDocumentStatus;
             statusLogo = binding.ItemRecyclerViewLogoStatus;
-            layout = binding.ItemRecyclerViewDocumentLayout;
         }
     }
 
@@ -79,9 +78,14 @@ public class DocumentMemberAdapter extends RecyclerView.Adapter<DocumentMemberAd
             holder.statusLogo.setImageResource(R.drawable.ic_baseline_close_24);
         }
 
-        holder.layout.setOnClickListener(v -> {
-            listener.onDocumentZoomClick(documents.get(position));
-        });
+        if (documents.get(position).getStatus() == DOC_STATUS.NOT_SENT) {
+            holder.statusLogo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onDocumentZoomClick(documents.get(position));
+                }
+            });
+        }
     }
 
     @Override
