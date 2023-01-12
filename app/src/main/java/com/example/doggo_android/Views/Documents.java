@@ -62,7 +62,7 @@ public class Documents extends Fragment {
                 // Ajoutez la vue enfant à un autre groupe de vues ici
                 mDialog.dismiss();
                 //refresh la page
-                NavHostFragment.findNavController(this).navigate(R.id.documents);
+                //NavHostFragment.findNavController(this).navigate(R.id.documents);
             });
             //delete white corners
             mDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);

@@ -4,6 +4,9 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.VectorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,9 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -24,13 +29,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.doggo_android.Adapters.DocumentPreviewAdapter;
+import com.example.doggo_android.Interfaces.documentPreviewClickListener;
 import com.example.doggo_android.R;
 import com.example.doggo_android.databinding.FragmentDocumentMemberZoomBinding;
 import com.example.doggo_android.Enums.DOC_STATUS;
-import com.example.doggo_android.Models.Document;
+import com.example.doggo_android.Models.DocumentDisplay;
 import com.example.doggo_android.ViewModels.DocumentViewModel;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 
 public class DocumentMemberZoomFragment extends Fragment {
@@ -55,31 +65,38 @@ public class DocumentMemberZoomFragment extends Fragment {
         super.onCreate(savedInstanceState);
         launcherCamera = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK){
-                viewModelDocument.getSelectedDocument().setStatus(DOC_STATUS.PENDING);
                 File fichierDoc = new File(lastestFile.getAbsolutePath());
 
                 Log.d("DOC_SAVE", "Fichier créé a : " + fichierDoc.getAbsolutePath());
+
+                Bitmap thumbnail = null;
+                try {
+                    thumbnail = getThumbnail(Uri.fromFile(fichierDoc));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                viewModelDocument.getSelectedDocument().getDocumentUrl().put(fichierDoc.getAbsolutePath(),thumbnail);
+
+                binding.recyclerViewDocPreview.getAdapter().notifyDataSetChanged();
                 //TODO: envoyer le fichier au serveur
 
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_documentMemberZoomFragment_to_documentMemberFragment);
             }
         });
         launcherExplorer = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
-                viewModelDocument.getSelectedDocument().setStatus(DOC_STATUS.PENDING);
-
-                //Je n'ai absolument aucune idée de si le fichier récupéré est le bon ou non
-                //Le nom change et je ne sait pas si c'est parce qu'il est stocké dans le cache avant d'être récup
-                //ou si c'est juste un fichier vide.
-                //les metadata du fichier semblent correspondre mais je n'arrive pas a récup le fichier?
 
                 String path = result.getData().getData().getPath();
                 File fichierDoc = new File(path);
                 Log.d("DOC_SAVE", fichierDoc.getName());
 
+                viewModelDocument.getSelectedDocument().getDocumentUrl().put(fichierDoc.getAbsolutePath(),null);
+
                 //TODO: envoyer le fichier au serveur
 
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_documentMemberZoomFragment_to_documentMemberFragment);
+                binding.recyclerViewDocPreview.getAdapter().notifyDataSetChanged();
+
             }
         });
     }
@@ -96,17 +113,26 @@ public class DocumentMemberZoomFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModelDocument = new ViewModelProvider(requireActivity()).get(DocumentViewModel.class);
 
-        Document document = viewModelDocument.getSelectedDocument();
+        DocumentDisplay documentDisplay = viewModelDocument.getSelectedDocument();
 
-        binding.textViewDocumentName.setText(document.getName());
-        binding.textViewDocumentDescription.setText(document.getDescription());
-        binding.textViewAddDocument.setText(document.getStatus().StatusMessage);
+        binding.textViewDocumentName.setText(documentDisplay.getName());
+        binding.textViewDocumentDescription.setText(documentDisplay.getDescription());
+        binding.textViewAddDocument.setText(documentDisplay.getStatus().StatusMessage);
 
-        if (document.getStatus() == DOC_STATUS.PENDING || document.getStatus() == DOC_STATUS.ACCEPTED){
+        DocumentPreviewAdapter adapter = new DocumentPreviewAdapter(documentDisplay.getDocumentUrl(), getActivity(), (documentPreviewClickListener) documentUrl -> {
+
+        });
+
+        binding.recyclerViewDocPreview.setAdapter(adapter);
+        binding.recyclerViewDocPreview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+
+
+        if (documentDisplay.getStatus() == DOC_STATUS.PENDING || documentDisplay.getStatus() == DOC_STATUS.ACCEPTED){
             binding.LayoutAddDocumentButton.setVisibility(View.INVISIBLE);
 
-        }  else if (document.getStatus() == DOC_STATUS.REJECTED){
-            binding.textViewAddDocumentRejectionReason.setText("Raison pour rejet : " + document.getRejectionReason());
+        }  else if (documentDisplay.getStatus() == DOC_STATUS.REJECTED){
+            binding.textViewAddDocumentRejectionReason.setText("Raison pour rejet : " + documentDisplay.getRejectionReason());
         }
 
         binding.buttonAddDocumentCamera.setOnClickListener(v -> {
@@ -134,6 +160,10 @@ public class DocumentMemberZoomFragment extends Fragment {
                 requestPermissionLauncherExplorer.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
         });
+
+        binding.buttonSendDocuments.setOnClickListener(v -> {
+
+        });
     }
 
     private final ActivityResultLauncher<String> requestPermissionLauncherCamera = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -151,4 +181,38 @@ public class DocumentMemberZoomFragment extends Fragment {
             Toast.makeText(requireContext(), "Permission refusée, veuillez modifier les permissions dans vos paramètres", Toast.LENGTH_LONG).show();
         }
     });
+
+    public Bitmap getThumbnail(Uri uri) throws FileNotFoundException, IOException {
+        InputStream input =  requireContext().getContentResolver().openInputStream(uri);
+
+        BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
+        onlyBoundsOptions.inJustDecodeBounds = true;
+        onlyBoundsOptions.inDither=true;//optional
+        onlyBoundsOptions.inPreferredConfig=Bitmap.Config.ARGB_8888;//optional
+        BitmapFactory.decodeStream(input, null, onlyBoundsOptions);
+        input.close();
+
+        if ((onlyBoundsOptions.outWidth == -1) || (onlyBoundsOptions.outHeight == -1)) {
+            return null;
+        }
+
+        int originalSize = (onlyBoundsOptions.outHeight > onlyBoundsOptions.outWidth) ? onlyBoundsOptions.outHeight : onlyBoundsOptions.outWidth;
+
+        double ratio = (originalSize > 200) ? (originalSize / 200) : 1.0;
+
+        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+        bitmapOptions.inSampleSize = getPowerOfTwoForSampleRatio(ratio);
+        bitmapOptions.inDither = true; //optional
+        bitmapOptions.inPreferredConfig=Bitmap.Config.ARGB_8888;//
+        input = requireContext().getContentResolver().openInputStream(uri);
+        Bitmap bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions);
+        input.close();
+        return bitmap;
+    }
+
+    private static int getPowerOfTwoForSampleRatio(double ratio){
+        int k = Integer.highestOneBit((int)Math.floor(ratio));
+        if(k==0) return 1;
+        else return k;
+    }
 }

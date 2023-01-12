@@ -1,57 +1,76 @@
 package com.example.doggo_android.ViewModels;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.doggo_android.Enums.DOC_STATUS;
-import com.example.doggo_android.Models.Document;
+import com.example.doggo_android.Models.DocumentDisplay;
+import com.example.doggo_android.Models.IRequiredDocument;
+import com.example.doggo_android.Models.IUserDocument;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DocumentViewModel extends ViewModel {
 
+    MutableLiveData<ArrayList<IRequiredDocument>> requiredDocuments = new MutableLiveData<>(new ArrayList<>());
+    MutableLiveData<ArrayList<IUserDocument>> userDocuments = new MutableLiveData<>(new ArrayList<>());
 
-    List<Document> documents = new ArrayList<>();
-    Document selectedDocument;
+    List<DocumentDisplay> documentDisplays = new ArrayList<>();
+    DocumentDisplay selectedDocumentDisplay;
 
-    public Document getSelectedDocument() {
-        return selectedDocument;
+    public DocumentDisplay getSelectedDocument() {
+        return selectedDocumentDisplay;
     }
 
-    public void setSelectedDocument(Document selectedDocument) {
-        this.selectedDocument = selectedDocument;
+    public void setSelectedDocument(DocumentDisplay selectedDocumentDisplay) {
+        this.selectedDocumentDisplay = selectedDocumentDisplay;
     }
 
-    public List<Document> getDocuments() {
-        if (documents.size() == 0){
-            initDocuments();
-        }
-        return documents;
+    public List<DocumentDisplay> getDocuments() {
+        return documentDisplays;
     }
 
-    public List<Document> getPendingDocuments(){
-        List<Document> documents = new ArrayList<>();
-        for (Document document : this.documents){
-            if (document.getStatus() == DOC_STATUS.NOT_SENT || document.getStatus() == DOC_STATUS.REJECTED){
-                documents.add(document);
+    public List<DocumentDisplay> getPendingDocuments(){
+        List<DocumentDisplay> documentDisplays = new ArrayList<>();
+        for (DocumentDisplay documentDisplay : this.documentDisplays){
+            if (documentDisplay.getStatus() == DOC_STATUS.NOT_SENT || documentDisplay.getStatus() == DOC_STATUS.REJECTED){
+                documentDisplays.add(documentDisplay);
             }
         }
-        return documents;
+        return documentDisplays;
     }
 
-    public void setDocuments(List<Document> documents) {
-        this.documents = documents;
+    public void setDocuments(List<DocumentDisplay> documentDisplays) {
+        this.documentDisplays = documentDisplays;
     }
 
-    public void initDocuments(){
-        documents.add(new Document("Certificat de dressage","Certificat de dressage de votre chien"));
-        documents.add(new Document("Carnet de vaccination","Carnet de vaccination de votre chien", DOC_STATUS.PENDING));
-        documents.add(new Document("Attestation de responsabilité civile","Votre attestation de responsabilité civile",DOC_STATUS.ACCEPTED));
-        Document falseDoc = new Document("Carte d'identification","Votre carte d'identification a la charte canine",DOC_STATUS.REJECTED);
-        falseDoc.setRejectionReason("Document incomplet");
-        documents.add(falseDoc);
+    public LiveData<ArrayList<IRequiredDocument>> getRequiredDocuments() {
+        return requiredDocuments;
     }
 
+    public LiveData<ArrayList<IUserDocument>> getUserDocuments() {
+        return userDocuments;
+    }
 
+    public void setRequiredDocuments(ArrayList<IRequiredDocument> requiredDocuments) {
+        this.requiredDocuments.setValue(requiredDocuments);
+    }
 
+    public void setUserDocuments(ArrayList<IUserDocument> userDocuments) {
+        this.userDocuments.setValue(userDocuments);
+    }
+
+    public void addRequiredDocument(IRequiredDocument requiredDocument) {
+        ArrayList<IRequiredDocument> newRequiredDocuments = this.requiredDocuments.getValue();
+        newRequiredDocuments.add(requiredDocument);
+        this.requiredDocuments.setValue(newRequiredDocuments);
+    }
+
+    public void addUserDocument(IUserDocument userDocument) {
+        ArrayList<IUserDocument> newUserDocuments = this.userDocuments.getValue();
+        newUserDocuments.add(userDocument);
+        this.userDocuments.setValue(newUserDocuments);
+    }
 }

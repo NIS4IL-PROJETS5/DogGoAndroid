@@ -42,7 +42,7 @@
             app:destination="@id/compteFragment" />
         <action    
             android:id="@+id/action_profileFragment_to_documents"
-            app:destination="@id/documents" />
+            app:destination="@id/documentDisplays" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -99,7 +99,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/documents"
+        android:id="@+id/documentDisplays"
         android:name="com.example.doggo_android.Views.Documents"
         android:label="Documents" >
         <action

@@ -1,9 +1,15 @@
 package com.example.doggo_android.Enums;
 
+import com.google.gson.annotations.SerializedName;
+
 public enum DOC_STATUS {
+    @SerializedName("0")
     NOT_SENT("Ajouter Document"),
+    @SerializedName("pending")
     PENDING("Document en attente"),
+    @SerializedName("refused")
     REJECTED("Ajouter Document"),
+    @SerializedName("accepted")
     ACCEPTED("Document accepté");
 
     public final String StatusMessage;

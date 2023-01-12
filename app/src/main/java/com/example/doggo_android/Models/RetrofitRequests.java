@@ -32,4 +32,13 @@ public interface RetrofitRequests {
     Call<IContact> executeContact(@Body HashMap<String, String> map, @Header("Authorization") String token);
     @POST("api/dogs/create")
     Call<IDog> executeCreateDog(@Body HashMap<String, String> map,@Header("Authorization") String token);
+
+    @GET("api/docs/reqDoc/user/sentornot")
+    Call<ArrayList<IRequiredDocument>> executeGetRequiredDocs(@Header("Authorization") String token);
+
+    @GET("api/docs/userDocs")
+    Call<ArrayList<IUserDocument>> executeGetUserDocs(@Header("Authorization") String token);
+
+    @GET("api/docs/doc/{id}")
+    Call<IUserDocument> executeGetDoc(@Path("id") String docId, @Header("Authorization") String token);
 }
