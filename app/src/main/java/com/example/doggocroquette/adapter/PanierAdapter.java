@@ -34,6 +34,7 @@ public class PanierAdapter extends RecyclerView.Adapter<PanierAdapter.PanierView
         holder.binding.textViewDescriptionPanier.setText(croquette.getDescription());
         holder.binding.textViewNomPanier.setText(croquette.getNom());
         holder.binding.textViewPrixPanier.setText(String.valueOf(croquette.getPrix()));
+        holder.binding.textViewNombrePanier.setText(String.valueOf(croquette.getNbPanier()));
     }
 
     @Override

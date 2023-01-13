@@ -37,46 +37,37 @@ public class CroquetteAdapter extends RecyclerView.Adapter<CroquetteAdapter.Croq
         return new CroquetteViewHolder(binding);
     }
 
+    @SuppressLint("SuspiciousIndentation")
     @Override
     public void onBindViewHolder(@NonNull CroquetteViewHolder holder, int position) {
         final Croquette croquette = croquettes.get(position);
-        holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SuspiciousIndentation")
-            @Override
-            public void onClick(View view) {
-                if(croquette.getStock()>0)
-                listener.onCroquetteClicked(croquette);
-            }
+        holder.binding.getRoot().setOnClickListener(view -> {
+            if(croquette.getStock()>0)
+            listener.onCroquetteClicked(croquette);
         });
         holder.binding.textViewDescriptionCroquette.setText(croquette.getDescription());
         holder.binding.textViewNomCroquette.setText(croquette.getNom());
         holder.binding.textViewPrixCroquette.setText(String.valueOf(croquette.getPrix()));
         holder.binding.textViewNbPanierCroquette.setText(String.valueOf(croquette.getNbPanier()));
-        holder.binding.buttonAjoutPanier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PanierSharedViewModel panierSharedViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(PanierSharedViewModel.class);
-                if(croquette.getStock()>0){
-                    holder.binding.buttonEnleverPanier.setEnabled(true);
-                    croquette.setNbPanier(croquette.getNbPanier()+1);
-                    croquette.setStock(croquette.getStock()-1);
-                    holder.binding.textViewNbPanierCroquette.setText(String.valueOf(croquette.getNbPanier()));
-                    panierSharedViewModel.addCroquetteToPanier(croquette);
-                }
-
+        holder.binding.buttonAjoutPanier.setOnClickListener(view -> {
+            PanierSharedViewModel panierSharedViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(PanierSharedViewModel.class);
+            if(croquette.getStock()>0){
+                holder.binding.buttonEnleverPanier.setEnabled(true);
+                croquette.setNbPanier(croquette.getNbPanier()+1);
+                croquette.setStock(croquette.getStock()-1);
+                holder.binding.textViewNbPanierCroquette.setText(String.valueOf(croquette.getNbPanier()));
+                panierSharedViewModel.addCroquetteToPanier(croquette);
             }
+
         });
-        holder.binding.buttonEnleverPanier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PanierSharedViewModel panierSharedViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(PanierSharedViewModel.class);
-                if(croquette.getNbPanier()>0){
-                    holder.binding.buttonAjoutPanier.setEnabled(true);
-                    croquette.setNbPanier(croquette.getNbPanier()-1);
-                    croquette.setStock(croquette.getStock()+1);
-                    holder.binding.textViewNbPanierCroquette.setText(String.valueOf(croquette.getNbPanier()));
-                    panierSharedViewModel.removeCroquetteFromPanier(croquette);
-                }
+        holder.binding.buttonEnleverPanier.setOnClickListener(view -> {
+            PanierSharedViewModel panierSharedViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(PanierSharedViewModel.class);
+            if(croquette.getNbPanier()>0){
+                holder.binding.buttonAjoutPanier.setEnabled(true);
+                croquette.setNbPanier(croquette.getNbPanier()-1);
+                croquette.setStock(croquette.getStock()+1);
+                holder.binding.textViewNbPanierCroquette.setText(String.valueOf(croquette.getNbPanier()));
+                panierSharedViewModel.removeCroquetteFromPanier(croquette);
             }
         });
         if (croquette.getStock() == 0) {
