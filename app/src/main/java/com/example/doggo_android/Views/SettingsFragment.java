@@ -1,4 +1,5 @@
 package com.example.doggo_android.Views;
+import com.example.doggo_android.FirebaseMessagingHandler;
 import com.example.doggo_android.R;
 import com.example.doggo_android.databinding.FragmentSettingsBinding;
 
@@ -14,6 +15,7 @@ import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +31,9 @@ public class SettingsFragment extends Fragment {
     FragmentSettingsBinding binding;
     NotificationCompat.Builder builder;
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     public SettingsFragment() {
     }
 
@@ -39,6 +44,8 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
+        sharedPreferences = getActivity().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         return binding.getRoot();
     }
 
@@ -80,6 +87,53 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+
+
+        binding.switchNotificationAlert.setChecked(sharedPreferences.getBoolean("switchNotificationAlerte", false));
+        binding.switchNotificationSimple.setChecked(sharedPreferences.getBoolean("switchNotificationSimple", false));
+        binding.switchNotificationFuture.setChecked(sharedPreferences.getBoolean("switchNotificationFuture", false));
+        binding.switchNotificationAgility.setChecked(sharedPreferences.getBoolean("switchNotificationAgility", false));
+
+        binding.switchNotificationAlert.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            editor.putBoolean("switchNotificationAlerte", isChecked);
+            editor.apply();
+            if (isChecked){
+                FirebaseMessagingHandler.subscribeToTopic("alerte", requireContext(),true);
+            } else {
+                FirebaseMessagingHandler.unsubscribeFromTopic("alerte", requireContext());
+            }
+        });
+
+        binding.switchNotificationSimple.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            editor.putBoolean("switchNotificationSimple", isChecked);
+            editor.apply();
+            if (isChecked){
+                FirebaseMessagingHandler.subscribeToTopic("simple", requireContext(),true);
+            } else {
+                FirebaseMessagingHandler.unsubscribeFromTopic("simple", requireContext());
+            }
+        });
+
+        binding.switchNotificationFuture.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            editor.putBoolean("switchNotificationFuture", isChecked);
+            editor.apply();
+            if (isChecked){
+                FirebaseMessagingHandler.subscribeToTopic("future", requireContext(),true);
+            } else {
+                FirebaseMessagingHandler.unsubscribeFromTopic("future", requireContext());
+            }
+        });
+
+        binding.switchNotificationAgility.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            editor.putBoolean("switchNotificationAgility", isChecked);
+            editor.apply();
+            if (isChecked){
+                FirebaseMessagingHandler.subscribeToTopic("agility", requireContext(),true);
+            } else {
+                FirebaseMessagingHandler.unsubscribeFromTopic("agility", requireContext());
+            }
+        });
+
     }
 
         /**

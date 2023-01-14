@@ -71,14 +71,14 @@
             android:id="@+id/turn_on_off_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Turn On/Off notification"
             android:backgroundTint="@color/light_orange"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="Turn On/Off notification"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/show" />
 
         <TextView
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -89,6 +89,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.501" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/turn_on_off_notification">
+
+            <Switch
+                android:id="@+id/switchNotificationAlert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notifications alertes" />
+
+            <Switch
+                android:id="@+id/switchNotificationSimple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notifications infos générales" />
+
+            <Switch
+                android:id="@+id/switchNotificationFuture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notifications évenements futurs" />
+
+            <Switch
+                android:id="@+id/switchNotificationAgility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notifications événements agility" />
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
