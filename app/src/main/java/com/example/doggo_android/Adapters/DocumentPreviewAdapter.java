@@ -12,11 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.doggo_android.Enums.DOC_STATUS;
 import com.example.doggo_android.Interfaces.documentPreviewClickListener;
 import com.example.doggo_android.Interfaces.documentZoomClickListener;
 import com.example.doggo_android.MainActivity;
 import com.example.doggo_android.ViewModels.DocumentViewModel;
 import com.example.doggo_android.databinding.RvDocpreviewItemBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashMap;
 
@@ -56,6 +58,14 @@ public class DocumentPreviewAdapter extends RecyclerView.Adapter<DocumentPreview
         if (documentDisplaysHashMap.get(key) != null){
             holder.docPreview.setImageBitmap(documentDisplaysHashMap.get(key));
         }
+        holder.deleteButton.setOnClickListener(v -> {
+            if (!(viewModelDocument.getSelectedDocument().getStatus() == DOC_STATUS.PENDING)){
+                listener.onDocumentPreviewDeleteClick(key);
+            }
+        });
+        holder.docPreview.setOnClickListener(v -> {
+            listener.onDocumentPreviewClick(key);
+        });
     }
 
     @Override
@@ -66,11 +76,13 @@ public class DocumentPreviewAdapter extends RecyclerView.Adapter<DocumentPreview
     public static class DocumentPreviewViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         ImageView docPreview;
+        FloatingActionButton deleteButton;
 
         public DocumentPreviewViewHolder(@NonNull View itemView, RvDocpreviewItemBinding binding) {
             super(itemView);
             name = binding.tvFilename;
             docPreview = binding.ivFilepreview;
+            deleteButton = binding.deleteButton;
         }
 
     }

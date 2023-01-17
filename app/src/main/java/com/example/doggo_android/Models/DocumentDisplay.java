@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 
 import com.example.doggo_android.Enums.DOC_STATUS;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,6 +16,7 @@ public class DocumentDisplay {
     private String rejectionReason;
     private DOC_STATUS status;
     private HashMap<String, Bitmap> documentUrl = new HashMap<>();
+    private List<File> filesToUpload = new ArrayList<>();
 
 
 
@@ -78,5 +81,13 @@ public class DocumentDisplay {
 
     public void setDocumentUrl(HashMap<String,Bitmap> documentUrl) {
         this.documentUrl = documentUrl;
+    }
+
+    public List<File> getFilesToUpload() {
+        return filesToUpload;
+    }
+
+    public void setFilesToUpload(List<File> filesToUpload) {
+        this.filesToUpload = filesToUpload;
     }
 }
