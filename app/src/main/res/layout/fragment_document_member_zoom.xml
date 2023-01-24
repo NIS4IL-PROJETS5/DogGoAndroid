@@ -119,41 +119,19 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonAddDocumentCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_weight="0">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/buttonAddDocumentGallery"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="2dp"
-                    android:layout_weight="0"
-                    android:background="@drawable/round_button"
-                    android:fontFamily="sans-serif"
-                    android:text="Gallerie"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/buttonAddDocumentCamera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="0"
-                    android:background="@drawable/round_button"
-                    android:fontFamily="sans-serif"
-                    android:text="Camera"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
+                android:layout_marginStart="2dp"
+                android:layout_weight="0"
+                android:background="@drawable/round_button"
+                android:fontFamily="sans-serif"
+                android:text="Camera"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonSendDocuments"

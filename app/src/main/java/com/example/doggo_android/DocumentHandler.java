@@ -31,6 +31,10 @@ public class DocumentHandler {
             mimeType = URLConnection.guessContentTypeFromName(file.getName());
         }
 
+        if (mimeType == null) {
+            mimeType = "application/octet-stream";
+        }
+
         RequestBody reqFile = RequestBody.create(MediaType.parse(mimeType), file);
 
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), reqFile);

@@ -100,7 +100,7 @@ public class DocumentMemberFragment extends Fragment {
     }
 
     private void handleGetRequiredDocuments(){
-        Call<ArrayList<IRequiredDocument>> call = requests.executeGetRequiredDocs(token);
+        Call<ArrayList<IRequiredDocument>> call = requests.executeGetUserDocsAndRequiredDocs(token);
 
         call.enqueue(new Callback<ArrayList<IRequiredDocument>>() {
             @Override

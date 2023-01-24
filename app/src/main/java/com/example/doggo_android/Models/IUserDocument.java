@@ -17,6 +17,8 @@ public class IUserDocument {
     private List<String> documentUrl;
     @SerializedName("status")
     private DOC_STATUS status;
+    @SerializedName("rejectionReason")
+    private String rejectionReason;
 
     public String getId() {
         return id;
@@ -66,4 +68,11 @@ public class IUserDocument {
         this.userId = userId;
     }
 
+    public String getRejectionReason() {
+        return rejectionReason;
+    }
+
+    public void setRejectionReason(String rejectionReason) {
+        this.rejectionReason = rejectionReason;
+    }
 }

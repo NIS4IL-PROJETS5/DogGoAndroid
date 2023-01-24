@@ -5,7 +5,7 @@ import com.example.doggo_android.Enums.DOC_STATUS;
 import com.google.gson.annotations.SerializedName;
 
 public class IRequiredDocument {
-    @SerializedName("docId")
+    @SerializedName(value="docId", alternate = {"_id"})
     private String reqDocId;
     @SerializedName("title")
     private String title;

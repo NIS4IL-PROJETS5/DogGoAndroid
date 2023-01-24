@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.Manifest;
 import android.app.NotificationChannel;
@@ -86,6 +87,10 @@ public class SettingsFragment extends Fragment {
                     Log.d("TESTBUTTON", "onViewCreated: Version not supported");
                 }
             }
+        });
+
+        binding.adminUserPanelButton.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_settingsFragment_to_adminMainPanelFragment);
         });
 
 

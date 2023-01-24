@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 String token = task.getResult();
                                 Log.d("TAG", token);
-
+                                setupNotification();
                             });
                 } else {
                     // TODO: Inform user that that your app will not show notifications.
@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Permission is automatically granted on API < 33
             Log.d("Permission", "askNotificationPermission: Permission automatically granted");
+            setupNotification();
 
         }
     }

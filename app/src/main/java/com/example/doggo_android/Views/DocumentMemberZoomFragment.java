@@ -1,5 +1,7 @@
 package com.example.doggo_android.Views;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -7,10 +9,12 @@ import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -24,6 +28,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +38,7 @@ import android.widget.Toast;
 
 import com.example.doggo_android.Adapters.DocumentPreviewAdapter;
 import com.example.doggo_android.DocumentHandler;
+import com.example.doggo_android.FileUtils;
 import com.example.doggo_android.Interfaces.documentPreviewClickListener;
 import com.example.doggo_android.MainActivity;
 import com.example.doggo_android.R;
@@ -90,7 +96,6 @@ public class DocumentMemberZoomFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-
                 viewModelDocument.getSelectedDocument().getFilesToUpload().add(fichierDoc);
 
                 viewModelDocument.getSelectedDocument().getDocumentUrl().put(fichierDoc.getAbsolutePath(),thumbnail);
@@ -101,7 +106,7 @@ public class DocumentMemberZoomFragment extends Fragment {
         launcherExplorer = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
 
-                String path = result.getData().getData().getPath();
+                String path = FileUtils.getPath(requireActivity(), result.getData().getData());
                 File fichierDoc = new File(path);
                 Log.d("DOC_SAVE", fichierDoc.getName());
 
@@ -110,7 +115,6 @@ public class DocumentMemberZoomFragment extends Fragment {
                 viewModelDocument.getSelectedDocument().getDocumentUrl().put(fichierDoc.getAbsolutePath(),null);
 
                 binding.recyclerViewDocPreview.getAdapter().notifyDataSetChanged();
-
             }
         });
     }
@@ -136,15 +140,11 @@ public class DocumentMemberZoomFragment extends Fragment {
         DocumentPreviewAdapter adapter = new DocumentPreviewAdapter(documentDisplay.getDocumentUrl(), getActivity(), new documentPreviewClickListener() {
             @Override
             public void onDocumentPreviewClick(String documentUrl) {
-                Log.d("DOWNLOAD", "onDocumentPreviewClick: " + documentUrl);
-                manager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-                Uri uri = Uri.parse(documentUrl.replace(Utils.getConfigValue(requireContext(),"api_url"),Utils.getConfigValue(requireContext(),"api_url2")));
-                //Uri uri = Uri.parse("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf");
-                Log.d("DOWNLOAD", "onDocumentPreviewClick: " + uri);
-                DownloadManager.Request request = new DownloadManager.Request(uri);
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                manager.enqueue(request);
+                Uri uri = Uri.parse(documentUrl);
+                Log.d("Download", "onDocumentPreviewClick: " + uri);
+                String downloadLocation = requireContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/" + documentUrl.substring(documentUrl.lastIndexOf("/")+1);
 
+                downloadFile(uri.toString(), downloadLocation, documentUrl.substring(documentUrl.lastIndexOf("/")+1), "image/jpeg", requireContext());
             }
 
             @Override
@@ -188,16 +188,6 @@ public class DocumentMemberZoomFragment extends Fragment {
                 requestPermissionLauncherCamera.launch(Manifest.permission.CAMERA);
             }
 
-        });
-
-        binding.buttonAddDocumentGallery.setOnClickListener(v -> {
-            intentExplorer = new Intent(Intent.ACTION_GET_CONTENT);
-            intentExplorer.setType("*/*");
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-                launcherExplorer.launch(intentExplorer);
-            } else {
-                requestPermissionLauncherExplorer.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
-            }
         });
 
         binding.buttonSendDocuments.setOnClickListener(v -> {
@@ -293,5 +283,34 @@ public class DocumentMemberZoomFragment extends Fragment {
         int k = Integer.highestOneBit((int)Math.floor(ratio));
         if(k==0) return 1;
         else return k;
+    }
+
+    public void downloadFile(String url, String filepath, String title, String desc, Context context) {
+        if (new File(filepath).exists()) {
+            Toast.makeText(context, "This file is already downloaded.", Toast.LENGTH_LONG).show();
+        } else {
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+            // in order for this if to run, you must use the android 3.2 to compile your app
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                request.allowScanningByMediaScanner();
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setTitle(title);
+                request.setDescription(desc);
+            }
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filepath);
+            DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+
+            manager.enqueue(request);
+            final String finalDestination = filepath;
+            final BroadcastReceiver onComplete = new BroadcastReceiver() {
+                public void onReceive(Context context, Intent intent) {
+
+                    //Do what to do after the download completes
+                }
+            };
+            context.registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+
+            Toast.makeText(context, "Download Started,check downloads when completed.", Toast.LENGTH_LONG).show();
+        }
     }
 }

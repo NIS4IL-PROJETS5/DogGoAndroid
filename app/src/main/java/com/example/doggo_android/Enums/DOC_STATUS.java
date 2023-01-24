@@ -7,9 +7,9 @@ public enum DOC_STATUS {
     NOT_SENT("Ajouter Document"),
     @SerializedName("pending")
     PENDING("Document en attente"),
-    @SerializedName("refused")
+    @SerializedName("rejected")
     REJECTED("Ajouter Document"),
-    @SerializedName("accepted")
+    @SerializedName("approved")
     ACCEPTED("Document accepté");
 
     public final String StatusMessage;
