@@ -36,14 +36,14 @@ public class ActualitesAdapter extends RecyclerView.Adapter<ActualitesAdapter.Ac
         IActus actualite = actualites.get(position);
         holder.binding.rvActualitesTopTitle.setText(actualite.getTitle());
         holder.binding.rvActualitesBottomDescription.setText(actualite.getDescription());
-
-
+        holder.binding.rvActualitesDate.setText(actualite.getStartDate());
     }
 
     @Override
     public int getItemCount() {
         return actualites.size();
     }
+
 
     public class ActualitesViewHolder extends RecyclerView.ViewHolder {
 
