@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
     RetrofitRequests requests;
     String token;
     ActualitesViewModel viewModel = new ActualitesViewModel();
-
+    Integer type = 2;
     public HomeFragment() {
 
     }
@@ -71,37 +71,47 @@ public class HomeFragment extends Fragment {
         this.handleGetActualites();
 
         binding.fragmentActualitesFilterLogo.setOnClickListener(view1 -> {
-            String[] options = {"Alerte", "Simple", "Future", "Agility", "Tout"};
+            String[] options = {"Alerte", "Tout", "Agility"};
 
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
             builder.setTitle("Afficher les actualités de type :")
                     .setItems(options, (dialog, which) -> {
-                        // Récupérez la sélection de l'utilisateur
-                        String selectedOption = options[which];
-
-
-                        // Filtrez les actualités en fonction de la sélection de l'utilisateur
-                        
-
-
-                        Log.d("TAG", "onClick: " + selectedOption);
-
-
+                        type = options[which] == "Agility" ? 4 :  which + 1;
+                        viewModel.setActus(new ArrayList<IActus>());
+                        page = 1;
+                        resetAdapter();
+                        handleGetActualites();
                     });
             builder.create().show();
+        });
+
+        binding.fragmentRvActualitesRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerView.canScrollVertically(1)) {
+                    page++;
+                    handleGetActualites();
+                }
+            }
         });
     }
 
 
+    public void resetAdapter() {
+        adapter = new ActualitesAdapter(requireContext(), viewModel.getActus().getValue());
 
-    /**
-     * It gets the actualites from the API and displays them in a recycler view
-     */
+        int lastIndex = adapter.getItemCount() - 1;
+        RecyclerView recyclerView = binding.fragmentRvActualitesRv;
+        recyclerView.scrollToPosition(lastIndex);
+
+        LinearLayoutManager manager = new LinearLayoutManager(requireContext());
+        binding.fragmentRvActualitesRv.setLayoutManager(manager);
+        binding.fragmentRvActualitesRv.setAdapter(adapter);
+    }
+
     public void handleGetActualites() {
-
-        Call<ArrayList<IActus>> call = requests.executeGetActus("Bearer " + token, String.valueOf(page));
-
-        List<IActus> itemsToRemove = new ArrayList<>();
+        Call<ArrayList<IActus>> call = requests.executeGetActus("Bearer " + token, String.valueOf(type) ,String.valueOf(page));
 
         call.enqueue(new Callback<ArrayList<IActus>>() {
             @Override
@@ -110,45 +120,16 @@ public class HomeFragment extends Fragment {
 
                     actus = response.body();
 
-
-                    for (IActus actu : actus) {
-                        if (actu.getType() == 4) {
-                            itemsToRemove.add(actu);
-                        } else {
-                            actu.setDescription(Utils.truncate(actu.getDescription(), 100));
-                        }
-                    }
-                    actus.removeAll(itemsToRemove);
-
-
                     if(viewModel.getActus() == null) {
                         viewModel.setActus(actus);
                     } else {
                         viewModel.addActus(actus);
                     }
 
-                    // Triez la liste d'actualités en fonction du type
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        Collections.sort(actus, Comparator.comparingInt(IActus::getType));
-                    }
-
-                    adapter = new ActualitesAdapter(requireContext(), viewModel.getActus().getValue());
-                    LinearLayoutManager manager = new LinearLayoutManager(requireContext());
-                    binding.fragmentRvActualitesRv.setLayoutManager(manager);
-                    binding.fragmentRvActualitesRv.setAdapter(adapter);
-                    binding.fragmentRvActualitesRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                        @Override
-                        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                            super.onScrollStateChanged(recyclerView, newState);
-                            if (!recyclerView.canScrollVertically(1)) {
-                                page++;
-                                Toast.makeText(requireContext(), "Page " + page, Toast.LENGTH_SHORT).show();
-                                handleGetActualites();
-                            }
-                        }
-                    });
+                    resetAdapter();
                     binding.fragmentActualitesRvTv.setVisibility(View.GONE);
                 } else {
+                    Log.d("TAG", "onResponse: " + response.code());
                     binding.fragmentActualitesRvTv.setVisibility(View.VISIBLE);
                 }
             }

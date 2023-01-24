@@ -9,9 +9,9 @@ public class IActus {
     @SerializedName("actId")
     private int id;
     @SerializedName("actDateDebut")
-    private Date startDate;
+    private String startDate;
     @SerializedName("actDateFin")
-    private Date endDate;
+    private String endDate;
     @SerializedName("actTitre")
     private String title;
     @SerializedName("actTexte")
@@ -19,20 +19,23 @@ public class IActus {
     @SerializedName("actCachee")
     private boolean hidden;
     @SerializedName("actDateCachee")
-    private Date hiddenDate;
+    private String hiddenDate;
     @SerializedName("actDesactive")
     private boolean disabled;
     @SerializedName("actType")
     private int type; // 1=alerte, 2=simple, 3=future, 4=agility
 
     public int getId() {return id;}
-    public Date getStartDate() {return startDate;}
-    public Date getEndDate() {return endDate;}
+    public String getStartDate() {
+        String[] date = startDate.split("-");
+        return date[2] + "/" + date[1] + "/" + date[0];
+}
+    public String getEndDate() {return endDate;}
     public String getTitle() {return title;}
     public String getDescription() {return description;}
     public void setDescription(String description) {this.description = description;}
     public boolean isHidden() {return hidden;}
-    public Date getHiddenDate() {return hiddenDate;}
+    public String getHiddenDate() {return hiddenDate;}
     public boolean isDisabled() {return disabled;}
     public int getType() {return type;}
 }
