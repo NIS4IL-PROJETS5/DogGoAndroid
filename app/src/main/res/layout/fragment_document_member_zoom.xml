@@ -8,10 +8,12 @@
     tools:context=".Views.DocumentMemberZoomFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
 
         <TextView
             android:id="@+id/textView"
@@ -53,17 +55,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textViewDocumentDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDocumentName" />
-
-    <TextView
         android:id="@+id/textViewDocumentName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,7 +64,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <TextView
+        android:id="@+id/textViewDocumentDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewDocPreview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDocumentName" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewDocPreview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDocumentDescription" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -85,7 +96,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDocumentDescription">
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewDocPreview">
+
+        <TextView
+            android:id="@+id/textViewAddDocumentRejectionReason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/textViewAddDocument"
@@ -103,39 +121,33 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonAddDocumentCamera"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Camera"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
+                android:layout_marginStart="2dp"
                 android:layout_weight="0"
                 android:background="@drawable/round_button"
                 android:fontFamily="sans-serif"
+                android:text="Camera"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buttonAddDocumentGallery"
+                android:id="@+id/buttonSendDocuments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Gallerie"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="0"
-                android:background="@drawable/round_button"
+                android:background="@drawable/round_button_green"
                 android:fontFamily="sans-serif"
+                android:text="Envoyer"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textViewAddDocumentRejectionReason"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:visibility="visible" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

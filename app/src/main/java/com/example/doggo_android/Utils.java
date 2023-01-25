@@ -1,8 +1,12 @@
 package com.example.doggo_android;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;

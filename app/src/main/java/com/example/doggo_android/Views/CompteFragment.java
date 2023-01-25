@@ -13,12 +13,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.doggo_android.Utils;
 import com.example.doggo_android.databinding.FragmentCompteBinding;
 
+import java.io.IOException;
 
-public class CompteFragment extends Fragment {
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+
+public class CompteFragment extends Fragment implements Callback{
 
     static FragmentCompteBinding binding;
+    private static CompteFragment instance;
 
     public CompteFragment() {
         // Required empty public constructor
@@ -35,6 +45,7 @@ public class CompteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentCompteBinding.inflate(inflater, container, false);
+        instance = this;
         return binding.getRoot();
     }
 
@@ -53,14 +64,52 @@ public class CompteFragment extends Fragment {
         SharedPreferences pref = context.getSharedPreferences("DogGo", 0);// 0 - for private mode
         String checkLogin = pref.getString("token", null);
 
+        String url = Utils.getConfigValue(context, "api_url") + "api/auth/check";
+
+        Log.d("URL", "checkLogin: " + url);
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", "Bearer " + checkLogin)
+                .build();
+
         if (checkLogin != null) {
-            Log.d("TAG", "checkLogin: " + checkLogin);
-            binding.fragmentContainerViewConnexion.setVisibility(View.GONE);
-            binding.fragmentContainerViewProfile.setVisibility(View.VISIBLE);
+            client.newCall(request).enqueue(instance);
         } else{
-            binding.fragmentContainerViewConnexion.setVisibility(View.VISIBLE);
-            binding.fragmentContainerViewProfile.setVisibility(View.GONE);
+            instance.hideProfile();
         }
+    }
+
+    @Override
+    public void onFailure(Call call, IOException e) {
+        hideProfile();
+    }
+
+    @Override
+    public void onResponse(Call call, Response response) throws IOException {
+            Log.d("Connexion", "onResponse: " + response.body().string());
+            if (response.code() == 200){
+                hideConnexion();
+            } else {
+                hideProfile();
+            }
+    }
+
+
+    private void hideConnexion(){
+        requireActivity().runOnUiThread(() -> {
+            binding.fragmentContainerViewConnexion.setVisibility(View.INVISIBLE);
+            binding.fragmentContainerViewProfile.setVisibility(View.VISIBLE);
+        });
+    }
+
+    private void hideProfile(){
+        requireActivity().runOnUiThread(() -> {
+            binding.fragmentContainerViewConnexion.setVisibility(View.VISIBLE);
+            binding.fragmentContainerViewProfile.setVisibility(View.INVISIBLE);
+        });
     }
 }
 

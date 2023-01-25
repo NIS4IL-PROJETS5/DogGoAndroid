@@ -42,13 +42,17 @@
             app:destination="@id/compteFragment" />
         <action    
             android:id="@+id/action_profileFragment_to_documents"
-            app:destination="@id/documents" />
+            app:destination="@id/documentDisplays" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.doggo_android.Views.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_adminMainPanelFragment"
+            app:destination="@id/adminMainPanelFragment" />
+    </fragment>
     <fragment
         android:id="@+id/candidatureFormFragment"
         android:name="com.example.doggo_android.Views.CandidatureFormFragment"
@@ -99,7 +103,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/documents"
+        android:id="@+id/documentDisplays"
         android:name="com.example.doggo_android.Views.Documents"
         android:label="Documents" >
         <action
@@ -124,5 +128,45 @@
             android:id="@+id/action_documentMemberZoomFragment_to_documentMemberFragment"
             app:destination="@id/documentMemberFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/adminMainPanelFragment"
+        android:name="com.example.doggo_android.Views.AdminMainPanelFragment"
+        android:label="fragment_admin_main_panel"
+        tools:layout="@layout/fragment_admin_main_panel" >
+        <action
+            android:id="@+id/action_adminMainPanelFragment_to_adminUserListFragment"
+            app:destination="@id/adminUserListFragment" />
+        <action
+            android:id="@+id/action_adminMainPanelFragment_to_adminRequiredDocumentListFragment"
+            app:destination="@id/adminRequiredDocumentListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminUserListFragment"
+        android:name="com.example.doggo_android.Views.AdminUserListFragment"
+        android:label="fragment_admin_user_list"
+        tools:layout="@layout/fragment_admin_user_list" >
+        <action
+            android:id="@+id/action_adminUserListFragment_to_adminUserDocumentListFragment"
+            app:destination="@id/adminUserDocumentListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminUserDocumentListFragment"
+        android:name="com.example.doggo_android.Views.AdminUserDocumentListFragment"
+        android:label="fragment_admin_user_document_list"
+        tools:layout="@layout/fragment_admin_user_document_list" >
+        <action
+            android:id="@+id/action_adminUserDocumentListFragment_to_adminUserDocumentZoomFragment"
+            app:destination="@id/adminUserDocumentZoomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminUserDocumentZoomFragment"
+        android:name="com.example.doggo_android.Views.AdminUserDocumentZoomFragment"
+        android:label="fragment_admin_user_document_zoom"
+        tools:layout="@layout/fragment_admin_user_document_zoom" />
+    <fragment
+        android:id="@+id/adminRequiredDocumentListFragment"
+        android:name="com.example.doggo_android.Views.AdminRequiredDocumentListFragment"
+        android:label="fragment_admin_required_document_list"
+        tools:layout="@layout/fragment_admin_required_document_list" />
 
 </navigation>

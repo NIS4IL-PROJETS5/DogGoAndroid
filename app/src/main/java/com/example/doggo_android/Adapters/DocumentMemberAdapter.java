@@ -13,10 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doggo_android.MainActivity;
+import com.example.doggo_android.Models.DocumentDisplay;
 import com.example.doggo_android.R;
 import com.example.doggo_android.Enums.DOC_STATUS;
 import com.example.doggo_android.Interfaces.documentZoomClickListener;
-import com.example.doggo_android.Models.Document;
 import com.example.doggo_android.ViewModels.DocumentViewModel;
 import com.example.doggo_android.databinding.RvItemDocumentMemberBinding;
 
@@ -24,7 +24,7 @@ import java.util.List;
 
 public class DocumentMemberAdapter extends RecyclerView.Adapter<DocumentMemberAdapter.DocumentViewHolder> {
 
-    List<Document> documents;
+    List<DocumentDisplay> documentDisplays;
     Context context;
 
     DocumentViewModel viewModelDocument;
@@ -33,8 +33,8 @@ public class DocumentMemberAdapter extends RecyclerView.Adapter<DocumentMemberAd
 
     documentZoomClickListener listener;
     
-    public DocumentMemberAdapter(List<Document> documents, Context context, documentZoomClickListener listener) {
-        this.documents = documents;
+    public DocumentMemberAdapter(List<DocumentDisplay> documentDisplays, Context context, documentZoomClickListener listener) {
+        this.documentDisplays = documentDisplays;
         this.context = context;
         this.viewModelDocument = new ViewModelProvider((MainActivity)context).get(DocumentViewModel.class);
         this.listener = listener;
@@ -64,29 +64,29 @@ public class DocumentMemberAdapter extends RecyclerView.Adapter<DocumentMemberAd
 
     @Override
     public void onBindViewHolder(DocumentViewHolder holder, int position) {
-        holder.name.setText(documents.get(position).getName());
-        if (documents.get(position).getStatus() == DOC_STATUS.NOT_SENT) {
+        holder.name.setText(documentDisplays.get(position).getName());
+        if (documentDisplays.get(position).getStatus() == DOC_STATUS.NOT_SENT) {
             holder.statusDescription.setText("Pas encore envoyé");
             holder.statusLogo.setImageResource(R.drawable.ic_baseline_more_horiz_24);
-        } else if (documents.get(position).getStatus() == DOC_STATUS.PENDING) {
+        } else if (documentDisplays.get(position).getStatus() == DOC_STATUS.PENDING) {
             holder.statusDescription.setText("En attente");
             holder.statusLogo.setImageResource(R.drawable.ic_baseline_more_horiz_24);
-        } else if (documents.get(position).getStatus() == DOC_STATUS.ACCEPTED) {
+        } else if (documentDisplays.get(position).getStatus() == DOC_STATUS.ACCEPTED) {
             holder.statusDescription.setText("Accepté");
             holder.statusLogo.setImageResource(R.drawable.ic_baseline_check_24);
-        } else if (documents.get(position).getStatus() == DOC_STATUS.REJECTED) {
+        } else if (documentDisplays.get(position).getStatus() == DOC_STATUS.REJECTED) {
             holder.statusDescription.setText("Refusé");
             holder.statusLogo.setImageResource(R.drawable.ic_baseline_close_24);
         }
 
         holder.layout.setOnClickListener(v -> {
-            listener.onDocumentZoomClick(documents.get(position));
+            listener.onDocumentZoomClick(documentDisplays.get(position));
         });
     }
 
     @Override
     public int getItemCount() {
-        return documents.size();
+        return documentDisplays.size();
     }
 
 }
