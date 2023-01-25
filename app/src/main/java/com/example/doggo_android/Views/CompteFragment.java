@@ -16,6 +16,9 @@ import android.view.ViewGroup;
 import com.example.doggo_android.Utils;
 import com.example.doggo_android.databinding.FragmentCompteBinding;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -89,12 +92,22 @@ public class CompteFragment extends Fragment implements Callback{
 
     @Override
     public void onResponse(Call call, Response response) throws IOException {
-            Log.d("Connexion", "onResponse: " + response.body().string());
-            if (response.code() == 200){
-                hideConnexion();
-            } else {
-                hideProfile();
+
+        String responseString = response.body().string();
+
+        if (response.code() == 200){
+            try {
+                JSONObject json = new JSONObject(responseString);
+                SharedPreferences.Editor editor = requireContext().getSharedPreferences("DogGo", 0).edit();
+                editor.putString("role", json.get("role").toString());
+                editor.apply();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+            hideConnexion();
+        } else {
+            hideProfile();
+        }
     }
 
 

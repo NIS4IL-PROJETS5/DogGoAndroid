@@ -97,11 +97,15 @@ public class ProfileFragment extends Fragment {
                     if (user.getName() == null) {
                         user = response.body();
                         connectionViewModel.setUser(user);
+
                         fetchUser();
                     } else {
                         binding.textViewPrenom.setText(user.getName());
                         binding.textViewNom.setText(user.getSurname());
                     }
+                    SharedPreferences.Editor editor = requireContext().getSharedPreferences("DogGo", 0).edit();
+                    editor.putString("role", user.getRole());
+                    editor.apply();
                 } else {
                     Log.d(TAG, "onResponse: Token is invalid");
                 }

@@ -1,6 +1,7 @@
 package com.example.doggo_android.Views;
 import com.example.doggo_android.FirebaseMessagingHandler;
 import com.example.doggo_android.R;
+import com.example.doggo_android.Utils;
 import com.example.doggo_android.databinding.FragmentSettingsBinding;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 public class SettingsFragment extends Fragment {
@@ -90,7 +92,12 @@ public class SettingsFragment extends Fragment {
         });
 
         binding.adminUserPanelButton.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_settingsFragment_to_adminMainPanelFragment);
+            if (Utils.getRole(requireContext()).equals("admin")){
+                Navigation.findNavController(v).navigate(R.id.action_settingsFragment_to_adminMainPanelFragment);
+            } else {
+                Toast.makeText(requireContext(), "Vous ne disposez pas des droits nécessaires", Toast.LENGTH_SHORT).show();
+            }
+
         });
 
 

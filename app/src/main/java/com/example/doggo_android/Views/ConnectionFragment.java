@@ -104,13 +104,17 @@ public class ConnectionFragment extends Fragment {
                             editor.putString("token", result.getToken()); // Storing string
                             editor.commit(); // commit changes
 
+                            /*
                             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                             builder.setTitle("Login Success").setMessage("UserId: " + result.getId() + "\n" + "Role: " + result.getRole() + "\n" + "Token: " + result.getToken()).setPositiveButton("OK", (dialogInterface, i) -> {
                                 dialogInterface.dismiss();
                                 loginDialog.cancel();
-                                CompteFragment.checkLogin(requireContext());
-                            }).show();
 
+                            }).show();
+                            */
+
+                            loginDialog.cancel();
+                            CompteFragment.checkLogin(requireContext());
                             break;
 
                         case 401:

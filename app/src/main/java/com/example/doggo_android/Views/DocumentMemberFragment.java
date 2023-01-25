@@ -155,7 +155,6 @@ public class DocumentMemberFragment extends Fragment {
                                     Log.d("document.id", document.getId());
                                     Log.d("userDocument.id", userDocument.getId());
                                     if (Objects.equals(userDocument.getId(), document.getId())){
-                                        Log.d("FINALLY", "onResponse: AAAAAAA");
                                         for (String url: userDocument.getDocumentUrl()){
                                             document.getDocumentUrl().put(url, null);
                                         }
