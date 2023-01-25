@@ -9,6 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface RetrofitRequests {
@@ -21,6 +22,9 @@ public interface RetrofitRequests {
     @GET("/api/auth/user/{id}")
     Call<IUser> executeGetUser(@Path("id") String userId, @Header("Authorization") String token);
 
+    @PUT("/api/auth/update/{id}")
+    Call<IUser> executeUpdateUser(@Path("id") String userId, @Body HashMap<String, String> map, @Header("Authorization") String token);
+
     @GET("/api/actualites/limit/{limit}")
     Call<ArrayList<IActus>> executeGetActus(@Header("Authorization") String token, @Path("limit") String limit);
 
@@ -31,4 +35,6 @@ public interface RetrofitRequests {
     Call<IContact> executeContact(@Body HashMap<String, String> map, @Header("Authorization") String token);
     @POST("api/dogs/create")
     Call<IDog> executeCreateDog(@Body HashMap<String, String> map,@Header("Authorization") String token);
+
+
 }

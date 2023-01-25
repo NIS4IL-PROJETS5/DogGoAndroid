@@ -151,6 +151,8 @@ public class CandidatureFormFragment extends Fragment {
             showFileChooser();
         });
 
+
+
         return binding.getRoot();
     }
 
