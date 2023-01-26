@@ -69,4 +69,8 @@ public interface RetrofitRequests {
 
     @PUT("api/docs/doc/update/{id}")
     Call<IUserDocument> executeUpdateDoc(@Path("id") String docId, @Body HashMap<String, String> map, @Header("Authorization") String token);
+
+    @PUT("/api/auth/update/{id}")
+    Call<IUser> executeUpdateUser(@Path("id") String userId, @Body HashMap<String, String> map, @Header("Authorization") String token);
+
 }

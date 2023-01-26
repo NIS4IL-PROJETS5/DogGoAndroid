@@ -72,6 +72,13 @@ public class ProfileFragment extends Fragment {
             controller.navigate(R.id.action_profileFragment_to_candidatureFormFragment);
         });
 
+        binding.buttonProfileInformation.setOnClickListener(v -> {
+            NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
+            assert navHostFragment != null;
+            NavController controller = navHostFragment.getNavController();
+            controller.navigate(R.id.action_compteFragment_to_InformationsFragment);
+        });
+
         binding.buttonProfileSignout.setOnClickListener(v -> {
             SharedPreferences preferences = getActivity().getSharedPreferences("DogGo", 0);
             preferences.edit().clear().apply();

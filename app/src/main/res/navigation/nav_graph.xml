@@ -63,6 +63,15 @@
             app:destination="@id/profileFragment" />
     </fragment>
     <fragment
+        android:id="@+id/InformationsFragment"
+        android:name="com.example.doggo_android.Views.InformationsProfileFragment"
+        android:label="fragment_informations_profile"
+        tools:layout="@layout/fragment_informations_profile">
+        <action
+            android:id="@+id/action_InformationsFragment_to_compteFragment"
+            app:destination="@id/compteFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/connectionFragment"
         android:name="com.example.doggo_android.Views.ConnectionFragment"
         android:label="fragment_connection"
@@ -100,6 +109,9 @@
         <action
             android:id="@+id/action_compteFragment_to_documentMemberFragment"
             app:destination="@id/documentMemberFragment" />
+        <action
+            android:id="@+id/action_compteFragment_to_InformationsFragment"
+            app:destination="@id/InformationsFragment" />
     </fragment>
 
     <fragment
