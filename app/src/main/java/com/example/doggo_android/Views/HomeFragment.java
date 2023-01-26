@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.doggo_android.Adapters.ActualitesAdapter;
+import com.example.doggo_android.Models.IActuImage;
 import com.example.doggo_android.Models.IActus;
 import com.example.doggo_android.Models.RetrofitRequests;
 import com.example.doggo_android.Utils;
@@ -40,7 +42,7 @@ public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
     ArrayList<IActus> actus;
     ActualitesAdapter adapter;
-    Integer page = 1;
+    Integer page = 0;
     RetrofitRequests requests;
     String token;
     ActualitesViewModel viewModel = new ActualitesViewModel();
@@ -78,7 +80,7 @@ public class HomeFragment extends Fragment {
                     .setItems(options, (dialog, which) -> {
                         type = options[which] == "Agility" ? 4 :  which + 1;
                         viewModel.setActus(new ArrayList<IActus>());
-                        page = 1;
+                        page = 0;
                         resetAdapter();
                         handleGetActualites();
                     });
@@ -108,6 +110,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager manager = new LinearLayoutManager(requireContext());
         binding.fragmentRvActualitesRv.setLayoutManager(manager);
         binding.fragmentRvActualitesRv.setAdapter(adapter);
+
     }
 
     public void handleGetActualites() {
@@ -126,6 +129,11 @@ public class HomeFragment extends Fragment {
                         viewModel.addActus(actus);
                     }
 
+                    for (IActus actu: viewModel.getActus().getValue()) {
+                        Log.d("BRUUUH", "onResponse: " + actu.getId());
+                        handleGetActualitiesImages(actu);
+                    }
+
                     resetAdapter();
                     binding.fragmentActualitesRvTv.setVisibility(View.GONE);
                 } else {
@@ -140,5 +148,29 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(requireContext(), "Fail to get data", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void handleGetActualitiesImages(IActus actu){
+
+        Call<ArrayList<IActuImage>> call = requests.executeGetActuImages("Bearer " + token, String.valueOf(actu.getId()));
+
+        call.enqueue(new Callback<ArrayList<IActuImage>>() {
+            @Override
+            public void onResponse(Call<ArrayList<IActuImage>> call, Response<ArrayList<IActuImage>> response) {
+                if (response.isSuccessful() && response.body().size() > 0) {
+                    ArrayList<IActuImage> images = response.body();
+                    Log.d("ACTU-IMAGES", "onResponse: " + images.get(0).getActphoFichierUrl(requireContext()));
+                    actu.setImages(images);
+                    resetAdapter();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<IActuImage>> call, Throwable t) {
+                Log.d("HomeFragment", "onFailure: " + t.getMessage());
+                Toast.makeText(requireContext(), "Fail to get data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

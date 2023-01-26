@@ -3,6 +3,7 @@ package com.example.doggo_android.Models;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.List;
 
 public class IActus {
 
@@ -24,6 +25,7 @@ public class IActus {
     private boolean disabled;
     @SerializedName("actType")
     private int type; // 1=alerte, 2=simple, 3=future, 4=agility
+    private List<IActuImage> images;
 
     public int getId() {return id;}
     public String getStartDate() {
@@ -38,4 +40,6 @@ public class IActus {
     public String getHiddenDate() {return hiddenDate;}
     public boolean isDisabled() {return disabled;}
     public int getType() {return type;}
+    public List<IActuImage> getImages() {return images;}
+    public void setImages(List<IActuImage> images) {this.images = images;}
 }

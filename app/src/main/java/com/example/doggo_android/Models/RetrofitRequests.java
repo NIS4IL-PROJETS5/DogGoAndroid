@@ -26,6 +26,9 @@ public interface RetrofitRequests {
     @GET("/api/actualites/limit/{type}/{limit}")
     Call<ArrayList<IActus>> executeGetActus(@Header("Authorization") String token, @Path("type") String type, @Path("limit") String limit);
 
+    @GET("/api/actualites/images/{id}")
+    Call<ArrayList<IActuImage>> executeGetActuImages(@Header("Authorization") String token, @Path("id") String id);
+
     @GET("/api/auth/users")
     Call<List<IUser>> executeGetUsers(@Header("Authorization") String token);
 
