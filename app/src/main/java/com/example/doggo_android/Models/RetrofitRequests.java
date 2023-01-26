@@ -31,6 +31,11 @@ public interface RetrofitRequests {
 
     @GET("/api/docs/doc/user/status/{id}")
     Call<IDOC_STATUSWrapper> executeGetDocStatus(@Path("id") String userId, @Header("Authorization") String token);
+    @PUT("/api/auth/update/{id}")
+    Call<IUser> executeUpdateUser(@Path("id") String userId, @Body HashMap<String, String> map, @Header("Authorization") String token);
+
+    @GET("/api/actualites/limit/{limit}")
+    Call<ArrayList<IActus>> executeGetActus(@Header("Authorization") String token, @Path("limit") String limit);
 
     @GET("api/auth/check")
     Call<IUser> executeCheckToken(@Header("Authorization") String token);
