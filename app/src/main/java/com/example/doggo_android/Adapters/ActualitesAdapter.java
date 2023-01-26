@@ -50,9 +50,9 @@ public class ActualitesAdapter extends RecyclerView.Adapter<ActualitesAdapter.Ac
                 if (image.getActphoCommentaire() != null){
                     comment = image.getActphoCommentaire();
                 }
-                slideModels.add(new SlideModel(image.getActphoFichierUrl(context), comment, ScaleTypes.CENTER_CROP));
+                slideModels.add(new SlideModel(image.getActphoFichierUrl(context), comment, ScaleTypes.CENTER_INSIDE));
             }
-            holder.binding.imageSlider.setImageList(slideModels, ScaleTypes.CENTER_CROP);
+            holder.binding.imageSlider.setImageList(slideModels, ScaleTypes.CENTER_INSIDE);
         }
     }
 
