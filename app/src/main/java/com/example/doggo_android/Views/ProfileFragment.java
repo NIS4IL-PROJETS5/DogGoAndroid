@@ -82,7 +82,13 @@ public class ProfileFragment extends Fragment {
             NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
             assert navHostFragment != null;
             NavController controller = navHostFragment.getNavController();
-            controller.navigate(R.id.action_compteFragment_to_documentMemberFragment);
+            controller.navigate(R.id.action_profileFragment_to_documentMemberFragment);
+        });
+        binding.buttonProfileInformation.setOnClickListener(v -> {
+            NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
+            assert navHostFragment != null;
+            NavController controller = navHostFragment.getNavController();
+            controller.navigate(R.id.action_profileFragment_to_informationsProfileFragment);
         });
     }
 
