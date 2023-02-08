@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.doggo_android.Models.RetrofitRequests;
 import com.example.doggo_android.Models.IUser;
@@ -88,7 +89,7 @@ public class ProfileFragment extends Fragment {
             NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
             assert navHostFragment != null;
             NavController controller = navHostFragment.getNavController();
-            controller.navigate(R.id.action_profileFragment_to_informationsProfileFragment);
+            controller.navigate(R.id.action_compteFragment2_to_informationsProfileFragment);
         });
     }
 

@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.compteFragment:
-                    controller.navigate(R.id.compteFragment);
+                    controller.navigate(R.id.compteFragment2);
                     break;
                 case R.id.homeFragment:
                     controller.navigate(R.id.homeFragment);

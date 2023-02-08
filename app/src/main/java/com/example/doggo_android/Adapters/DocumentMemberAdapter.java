@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,7 +44,7 @@ public class DocumentMemberAdapter extends RecyclerView.Adapter<DocumentMemberAd
     public static class DocumentViewHolder extends RecyclerView.ViewHolder {
         TextView name, statusDescription;
         ImageView statusLogo;
-        ConstraintLayout layout;
+        LinearLayout layout;
 
 
 

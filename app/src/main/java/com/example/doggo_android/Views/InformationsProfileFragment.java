@@ -154,6 +154,8 @@ public class InformationsProfileFragment extends Fragment {
             Log.e("ContactFragment", "onViewCreated: " + e.getMessage());
         }
 
+        this.token = Utils.getToken(requireContext());
+
         this.user = connectionViewModel.getUser();
         this.checkToken();
         Button updateButton = binding.button;
@@ -162,9 +164,8 @@ public class InformationsProfileFragment extends Fragment {
             String surname = binding.textViewSurname.getText().toString();
             String email = binding.textViewEmail.getText().toString();
             String phone = binding.textViewPhone.getText().toString();
-            String role = binding.textViewRole.getText().toString();
 
-            if(validateFields(name,surname,email,phone,role)){
+            if(validateFields(name,surname,email,phone)){
                 HashMap<String, String> updateMap = new HashMap<>();
                 updateMap.put("name", name);
                 updateMap.put("surname", surname);
@@ -180,7 +181,6 @@ public class InformationsProfileFragment extends Fragment {
                             // handle the updated user object and update UI
                         } else {
                             // handle the error
-                            Toast.
                         }
                     }
                     @Override
@@ -192,7 +192,7 @@ public class InformationsProfileFragment extends Fragment {
             }
         }));
     }
-    private boolean validateFields(String name, String surname, String email, String phone, String role) {
+    private boolean validateFields(String name, String surname, String email, String phone) {
         boolean isValid = true; // Initialise avec la valeur true
         if (name.isEmpty()) {
             Toast.makeText( getContext(), "Champ nom vide", Toast.LENGTH_SHORT).show();
@@ -226,14 +226,6 @@ public class InformationsProfileFragment extends Fragment {
         else {
             binding.ViewTextPhone.setBackgroundColor(Color.parseColor("#E4E4E4"));
         }
-        if (role.isEmpty()) {
-            Toast.makeText(getContext(), "Role vide", Toast.LENGTH_SHORT).show();
-            binding.ViewTextRole.setBackgroundColor(Color.RED);
-            isValid = false;
-        }
-        else {
-            binding.ViewTextRole.setBackgroundColor(Color.parseColor("#E4E4E4"));
-        }
         return isValid;
     }
 
@@ -243,6 +235,7 @@ public class InformationsProfileFragment extends Fragment {
         call.enqueue(new Callback<IUser>() {
             @Override
             public void onResponse(Call<IUser> call, Response<IUser> response) {
+                Log.d(TAG, "onResponse: " + response.code());
                 if (response.code() == 200) {
                     Log.d(TAG, "onResponse: Token is valid");
                     if (user.getName() == null) {
@@ -254,11 +247,9 @@ public class InformationsProfileFragment extends Fragment {
                         binding.textViewSurname.setText(user.getSurname());
                         binding.textViewEmail.setText(user.getEmail());
                         binding.textViewPhone.setText(user.getPhone());
-                        binding.textViewRole.setText(user.getRole());
                     }
                 } else {
                     Log.d(TAG, "onResponse: Token is invalid");
-                    NavHostFragment.findNavController(InformationsProfileFragment.this).navigate(R.id.action_profileFragment_to_connectionFragment);
                 }
             }
 
@@ -284,7 +275,6 @@ public class InformationsProfileFragment extends Fragment {
                     binding.textViewSurname.setText(user.getSurname());
                     binding.textViewEmail.setText(user.getEmail());
                     binding.textViewPhone.setText(user.getPhone());
-                    binding.textViewRole.setText(user.getRole());
 
                 } else {
                     Log.d(TAG, "onResponse: User not fetched");
